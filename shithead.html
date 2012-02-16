@@ -7,20 +7,22 @@
 <div id ="main">
 </div>
 
-<div id="playerform">
-    <form id="playerform_frm">
-        Number of players: <input type="text" name="numplayers"/></br>
-        Number of cards each: <input type="text" name="numcards"/></br>
-        <input id="create" 
-            type="submit" 
-            value="Create Game"
-            onclick="submitCreateGame(this.form)" />
-    </form>
-</div>
+<div id="divs">
+    <div id="playerform" method="post">
+        <form id="playerform_frm" method="post">
+            Number of players: <input type="text" name="numplayers"/></br>
+            Number of cards each: <input type="text" name="numcards"/></br>
+            <input id="create" 
+                type="submit"
+                value="Create Game"
+                onClick="submitCreateGame(this.form);return false"/>
+        </form>
+    </div>
 
-<div id="details">
-    Num players: X</br>
-    Num cards: x
+    <div id="details">
+        Num players: X</br>
+        Num cards: x
+    </div>
 </div>
 
 </body>

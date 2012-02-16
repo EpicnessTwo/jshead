@@ -1,24 +1,32 @@
 var game;
+var main;
+var playerform;
+var divs;
+var details;
 
 function init()
 {
+    console.log("INIT");
     main = document.getElementById("main");
-    playerform = document.getElementById("playerform");
+    playerform = document.getElementById('playerform');
+    divs = document.getElementById("divs");
     details = document.getElementById("details");
-    
+
     main.appendChild(playerform);
-    details.style.visibility="hidden";
+    playerform.style.display="inline"; 
+
+    details.style.display="none";
 }
 
 function submitCreateGame(form)
 {
-    console.log("Entered submit");
-    game = new game(form.numplayers.value, form.numcards.value);
-    
-    main.removeChild(playerform);
-
-    details.style.visibility="visible";
+    details.style.display="inline";
     main.appendChild(details);
+
+    playerform.style.display="none";    
+    divs.appendChild(playerform); 
+    
+    game = new game(form.numplayers.value, form.numcards.value);
 }
 
 function game(numplayers, numcards)
