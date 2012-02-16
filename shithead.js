@@ -1,23 +1,24 @@
 var game;
 
+function init()
+{
+    main = document.getElementById("main");
+    playerform = document.getElementById("playerform");
+    details = document.getElementById("details");
+    
+    main.appendChild(playerform);
+    details.style.visibility="hidden";
+}
+
 function submitCreateGame(form)
 {
     console.log("Entered submit");
     game = new game(form.numplayers.value, form.numcards.value);
     
-    var maindiv = document.getElementById("main");
-    var formdiv = document.getElementById("playerform");
-    maindiv.removeChild(formdiv);
+    main.removeChild(playerform);
 
-    var detailsdiv = document.createElement("div");
-    maindiv.setAttribute("id", "detailsdiv");
-    
-    var players = "Num players : " + game.numplayers;
-    var cards = "Num cards : " + game.numcards;
-    
-    maindiv.innerHTML = players + "</br>" + cards;
-
-    maindiv.appendChild(detailsdiv);
+    details.style.visibility="visible";
+    main.appendChild(details);
 }
 
 function game(numplayers, numcards)
