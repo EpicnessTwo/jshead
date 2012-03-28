@@ -4,10 +4,15 @@ var playerform;
 var divs;
 var details;
 
+function hide(adiv) {
+    adiv.style.display="none";
+    divs.appendChild(adiv);
+}
+
 function init() {
     console.log("INIT");
     main = document.getElementById("main");
-    playerform = document.getElementById('playerform');
+    playerform = document.getElementById("playerform");
     divs = document.getElementById("divs");
     details = document.getElementById("details");
 
@@ -23,8 +28,7 @@ function submitCreateGame(form) {
     details.style.display="inline";
     main.appendChild(details);
 
-    playerform.style.display="none";    
-    divs.appendChild(playerform); 
+    hide(playerform);
     
     document.getElementById("numPlayers").innerHTML = game.numplayers;
     document.getElementById("numCards").innerHTML = game.numcards;
