@@ -55,6 +55,8 @@ function submitCreateGame(form) {
     hide(gameform);
     
     document.getElementById("details_numcards").innerHTML = game.numcards;
+    document.getElementById("details_decksize").innerHTML = game.deck.length;
+
     var playersdiv = document.getElementById("details_players");
     
     for (i = 0; i < game.numplayers; i++) {
