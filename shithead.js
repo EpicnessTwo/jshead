@@ -4,12 +4,14 @@ var game;
 
 var divmain;
 var divgameform;
+var divswap;
 var divdivs;
 var divtitle;
 var divpile;
 var divdeck;
 var divburnt;
 var divplayers;
+var divswpplayer;
 
 
 function hide(adiv) {
@@ -20,21 +22,26 @@ function hide(adiv) {
 function init() {
     divmain = document.getElementById("main");
     divgameform = document.getElementById("gameform");
+    divswap = document.getElementById("swap");
     divdivs = document.getElementById("divs");
     divtitle = document.getElementById("title");
     divpile = document.getElementById("pile");
     divdeck = document.getElementById("deck");
     divburnt = document.getElementById("burnt");
     divplayers = document.getElementById("players");
+    divswpplayer = document.getElementById("swp_player");
 
-    divmain.appendChild(divgameform);
-    divgameform.style.display="inline"; 
-
+    divdivs.style.display="none";   
+    divswap.style.display="none";
     divtitle.style.display="none";
     divpile.style.display="none";
     divdeck.style.display="none";
     divburnt.style.display="none";
     divplayers.style.display="none";
+    divswpplayer.style.display="none";
+    
+    divmain.appendChild(divgameform);
+    divgameform.style.display="inline"; 
 }
 
 function addplayer() {
@@ -86,21 +93,69 @@ function submitCreateGame(form) {
     divpile.style.display="inline";
     divdeck.style.display="inline";
     divburnt.style.display="inline";
-    
-/*
-    details.style.display="inline";
-    main.appendChild(details);
 
+    var player = game.getCurrentPlayer();
     
-    document.getElementById("details_decksize").innerHTML = game.deck.length;
-
-    var playersdiv = document.getElementById("details_players");
-    
-    for (i = 0; i < game.numplayers; i++) {
-        var newdiv = document.createElement('div');
-        newdiv.id = "player" + (i + 1) + "details";
-        newdiv.innerHTML = players[i].getDetails();
-        playersdiv.appendChild(newdiv);
+    var handcards = "Hand:<br>";
+    for (i = 0; i < player.hand.length; i++) {
+        handcards += "(" + (i+1) + ")";
+        handcards += player.hand[i].toString();
+        if (i < player.hand.length-1) {
+            handcards += ", ";
+        }
     }
-*/
+
+    var faceupcards = "Face up:<br>";
+    for (i = 0; i < player.faceup.length; i++) {
+        faceupcards += "(" + (i+1) + ")";
+        faceupcards += player.faceup[i].toString();
+        if (i < player.faceup.length-1) {
+            faceupcards += ", ";
+        }
+    }
+
+    divswpplayer.innerHTML = 
+        player.name + "<br>" + 
+        handcards + "<br>" + 
+        faceupcards + "<br>";
+
+    main.appendChild(divswpplayer);
+    divswpplayer.style.display="inline";
+
+    main.appendChild(divswap);  
+    divswap.style.display="inline";
+}
+
+function swapCards(form) {
+    var player = game.getCurrentPlayer();
+    var handcard = form.handcard.value - 1;
+    var faceupcard = form.faceupcard.value -1;
+
+    player.swapCards(handcard, faceupcard);
+    
+    var handcards = "Hand:<br>";
+    for (i = 0; i < player.hand.length; i++) {
+        handcards += "(" + (i+1) + ")";
+        handcards += player.hand[i].toString();
+        if (i < player.hand.length-1) {
+            handcards += ", ";
+        }
+    }
+
+    var faceupcards = "Face up:<br>";
+    for (i = 0; i < player.faceup.length; i++) {
+        faceupcards += "(" + (i+1) + ")";
+        faceupcards += player.faceup[i].toString();
+        if (i < player.faceup.length-1) {
+            faceupcards += ", ";
+        }
+    }
+
+    divswpplayer.innerHTML = 
+        player.name + "<br>" + 
+        handcards + "<br>" + 
+        faceupcards + "<br>";
+   
+    form.handcard.value = "";
+    form.faceupcard.value = ""; 
 }

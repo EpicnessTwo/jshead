@@ -13,7 +13,7 @@
 <div id="divs">
     <div id="gameform">
         <form id="gameform_frm" method="post">
-            Number of cards each: <input type="text" name="numcards"/></br>
+            Number of cards each: <input type="text" name="numcards"/>
             <div id="frm_players">
                 <div id="frm_player1">
                     Player 1 name: 
@@ -35,6 +35,17 @@
     <div id="deck"></div>
 
     <div id="burnt"></div>
+
+    <div id="swp_player"></div>
+    
+    <div id="swap"> 
+        <form id="frm_swp" method="post">
+            Hand card:<input type="text" name="handcard"/><br>
+            Faceup card:<input type="text" name="faceupcard"/><br>
+            <input id="swapcards" type="submit" value="Swap"
+                onClick="swapCards(this.form);return false"/>
+        </form>
+    </div>
 
     <div id="players"></div>
 

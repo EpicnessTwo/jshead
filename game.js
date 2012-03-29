@@ -5,9 +5,11 @@ function Game(numcards, players) {
     this.deck = new Array();
     this.pile = new Array();
     this.burnt = 0;
+    this.currentplayer = 0;
 
     this.deal = deal;
     this.shuffle = shuffle;
+    this.getCurrentPlayer = getCurrentPlayer;
 
     var cardsNeeded = numcards * players.length * 3;
         
@@ -37,5 +39,9 @@ function Game(numcards, players) {
         for (var j, x, i = this.deck.length; i; 
             j = parseInt(Math.random() * i), x = 
                 this.deck[--i], this.deck[i] = this.deck[j], this.deck[j] = x);
+    }
+
+    function getCurrentPlayer() {
+        return this.players[this.currentplayer];
     }
 }
