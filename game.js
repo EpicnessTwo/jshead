@@ -3,6 +3,7 @@ function Game(numcards, players) {
     this.numcards = numcards;
     this.players = players;
     this.deck = new Array();
+    this.deal = deal;
 
     var cardsNeeded = numcards * players.length * 3;
         
@@ -16,4 +17,14 @@ function Game(numcards, players) {
     while(this.deck.length < cardsNeeded) {
         this.deck = this.deck.concat(singleDeck);
     }   
+
+    function deal() {
+        for (i = 0; i < this.players.length; i++) {
+            for (j = 0; j < this.numcards; j++) {
+                this.players[i].dealToHand(this.deck.pop());
+                this.players[i].dealToFaceUp(this.deck.pop());
+                this.players[i].dealToFaceDown(this.deck.pop());
+            }
+        }
+    }
 }

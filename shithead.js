@@ -48,6 +48,7 @@ function submitCreateGame(form) {
     }
 
     game = new Game(form.numcards.value, players);
+    game.deal();
     
     details.style.display="inline";
     main.appendChild(details);
