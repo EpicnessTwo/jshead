@@ -8,21 +8,27 @@
 </div>
 
 <div id="divs">
-    <div id="playerform" method="post">
-        <form id="playerform_frm" method="post">
-            Number of players: <input type="text" name="numplayers"/></br>
+    <div id="gameform">
+        <form id="gameform_frm" method="post">
             Number of cards each: <input type="text" name="numcards"/></br>
-            <input id="create" 
-                type="submit"
-                value="Create Game"
+            <div id="players">
+                <div id="player1">
+                    Player 1 name: 
+                        <input type="text" id="player1name" name="player1name">
+                </div>
+            </div>
+            <input type="button" value="Add player" onClick="addplayer();">
+            <input id="create" type="submit" value="Create Game"
                 onClick="submitCreateGame(this.form);return false"/>
         </form>
     </div>
 
     <div id="details">
-        Num players: <div id="numPlayers"></div>
-        Num cards: <div id="numCards"></div>
+        <p>Game details</p>
+            Num cards each: <div id="details_numcards"></div>
+            Players: <div id="details_players"></div>
     </div>
+
 </div>
 
 </body>
