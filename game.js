@@ -3,6 +3,9 @@ function Game(numcards, players) {
     this.numcards = numcards;
     this.players = players;
     this.deck = new Array();
+    this.pile = new Array();
+    this.burnt = 0;
+
     this.deal = deal;
     this.shuffle = shuffle;
 

@@ -1,11 +1,16 @@
 var numplayers = 1
 var maxplayers = 4
-
 var game;
-var main;
-var gameform;
-var divs;
-var details;
+
+var divmain;
+var divgameform;
+var divdivs;
+var divtitle;
+var divpile;
+var divdeck;
+var divburnt;
+var divplayers;
+
 
 function hide(adiv) {
     adiv.style.display="none";
@@ -13,15 +18,23 @@ function hide(adiv) {
 }
 
 function init() {
-    main = document.getElementById("main");
-    gameform = document.getElementById("gameform");
-    divs = document.getElementById("divs");
-    details = document.getElementById("details");
+    divmain = document.getElementById("main");
+    divgameform = document.getElementById("gameform");
+    divdivs = document.getElementById("divs");
+    divtitle = document.getElementById("title");
+    divpile = document.getElementById("pile");
+    divdeck = document.getElementById("deck");
+    divburnt = document.getElementById("burnt");
+    divplayers = document.getElementById("players");
 
-    main.appendChild(gameform);
-    gameform.style.display="inline"; 
+    divmain.appendChild(divgameform);
+    divgameform.style.display="inline"; 
 
-    details.style.display="none";
+    divtitle.style.display="none";
+    divpile.style.display="none";
+    divdeck.style.display="none";
+    divburnt.style.display="none";
+    divplayers.style.display="none";
 }
 
 function addplayer() {
@@ -29,33 +42,56 @@ function addplayer() {
         alert("Upto " + maxplayers + " players are allowed");
     } else {
         var newdiv = document.createElement('div');
-        newdiv.id = "player" + (numplayers + 1);
+        newdiv.id = "frm_player" + (numplayers + 1);
         newdiv.innerHTML = "Player " + (numplayers + 1) + 
             " name: <input type='text' " + 
-            "id='player" + (numplayers + 1) + "name' " + 
-            "name='player" + (numplayers + 1) + "name'>";
-        document.getElementById("players").appendChild(newdiv);
+            "id='frm_player" + (numplayers + 1) + "name' " + 
+            "name='frm_player" + (numplayers + 1) + "name'>";
+        document.getElementById("frm_players").appendChild(newdiv);
         numplayers++;
     }
 }
 
 function submitCreateGame(form) {
+    hide(gameform);
+    
     var players = new Array(numplayers);
 
     for (i = 0; i < numplayers; i++) {
-        var name = document.getElementById("player" + (i + 1) + "name").value;
+        var name = document.getElementById("frm_player" + (i + 1) + "name").value;
         players[i] = new Player(name, form.numcards.value);
     }
 
     game = new Game(form.numcards.value, players);
     game.deal();
     
+    main.appendChild(divtitle);
+    divtitle.style.display="inline";
+
+    var pilecards = "";
+    for (i = 0; i < game.pile.length; i++) {
+        pilecards += game.pile[i].toString();
+        pilecards += "<br>";
+    }
+    
+    divpile.innerHTML = game.pile.length + " on pile:<br>" + pilecards;    
+    main.appendChild(divpile);
+
+    divdeck.innerHTML = game.deck.length + " left on deck<br>";
+    main.appendChild(divdeck);
+    
+    divburnt.innerHTML = game.burnt + " burnt<br>";
+    main.appendChild(divburnt);
+
+    divpile.style.display="inline";
+    divdeck.style.display="inline";
+    divburnt.style.display="inline";
+    
+/*
     details.style.display="inline";
     main.appendChild(details);
 
-    hide(gameform);
     
-    document.getElementById("details_numcards").innerHTML = game.numcards;
     document.getElementById("details_decksize").innerHTML = game.deck.length;
 
     var playersdiv = document.getElementById("details_players");
@@ -66,4 +102,5 @@ function submitCreateGame(form) {
         newdiv.innerHTML = players[i].getDetails();
         playersdiv.appendChild(newdiv);
     }
+*/
 }
