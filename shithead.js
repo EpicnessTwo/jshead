@@ -13,7 +13,6 @@ function hide(adiv) {
 }
 
 function init() {
-    console.log("INIT");
     main = document.getElementById("main");
     gameform = document.getElementById("gameform");
     divs = document.getElementById("divs");
@@ -41,14 +40,14 @@ function addplayer() {
 }
 
 function submitCreateGame(form) {
-    players = new Array(numplayers);
+    var players = new Array(numplayers);
 
     for (i = 0; i < numplayers; i++) {
-        name = document.getElementById("player" + (i + 1) + "name").value;
-        players[i] = new player(name, form.numcards.value);
+        var name = document.getElementById("player" + (i + 1) + "name").value;
+        players[i] = new Player(name, form.numcards.value);
     }
 
-    game = new game(form.numcards.value, players);
+    game = new Game(form.numcards.value, players);
     
     details.style.display="inline";
     main.appendChild(details);
@@ -56,29 +55,12 @@ function submitCreateGame(form) {
     hide(gameform);
     
     document.getElementById("details_numcards").innerHTML = game.numcards;
-    playersdiv = document.getElementById("details_players");
+    var playersdiv = document.getElementById("details_players");
     
     for (i = 0; i < game.numplayers; i++) {
         var newdiv = document.createElement('div');
         newdiv.id = "player" + (i + 1) + "details";
-        newdiv.innerHTML = players[i].name;
+        newdiv.innerHTML = players[i].getDetails();
         playersdiv.appendChild(newdiv);
     }
 }
-
-function game(numcards, players) {
-    this.numplayers = players.length;
-    this.numcards = numcards;
-    this.players = players;
-}
-
-function player(name, numCards) {
-    this.name = name;
-    this.numCards = numCards;
-    this.getDetails = getDetails;
-
-    function getDetails() {
-        return "Name: " + name + ", numCards: " + numCards;
-    }
-}
-
