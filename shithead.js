@@ -95,30 +95,9 @@ function submitCreateGame(form) {
     divburnt.style.display="inline";
 
     var player = game.getCurrentPlayer();
+
+    populatePlayerSwap(player);
     
-    var handcards = "Hand:<br>";
-    for (i = 0; i < player.hand.length; i++) {
-        handcards += "(" + (i+1) + ")";
-        handcards += player.hand[i].toString();
-        if (i < player.hand.length-1) {
-            handcards += ", ";
-        }
-    }
-
-    var faceupcards = "Face up:<br>";
-    for (i = 0; i < player.faceup.length; i++) {
-        faceupcards += "(" + (i+1) + ")";
-        faceupcards += player.faceup[i].toString();
-        if (i < player.faceup.length-1) {
-            faceupcards += ", ";
-        }
-    }
-
-    divswpplayer.innerHTML = 
-        player.name + "<br>" + 
-        handcards + "<br>" + 
-        faceupcards + "<br>";
-
     main.appendChild(divswpplayer);
     divswpplayer.style.display="inline";
 
@@ -132,7 +111,14 @@ function swapCards(form) {
     var faceupcard = form.faceupcard.value -1;
 
     player.swapCards(handcard, faceupcard);
-    
+   
+    populatePlayerSwap(player);
+ 
+    form.handcard.value = "";
+    form.faceupcard.value = ""; 
+}
+
+function populatePlayerSwap(player) {
     var handcards = "Hand:<br>";
     for (i = 0; i < player.hand.length; i++) {
         handcards += "(" + (i+1) + ")";
@@ -155,7 +141,8 @@ function swapCards(form) {
         player.name + "<br>" + 
         handcards + "<br>" + 
         faceupcards + "<br>";
-   
-    form.handcard.value = "";
-    form.faceupcard.value = ""; 
+}
+
+function swapDone() {
+
 }
