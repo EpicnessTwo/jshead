@@ -15,7 +15,12 @@ var divswpplayer;
 
 function hide(adiv) {
     adiv.style.display="none";
-    divs.appendChild(adiv);
+    divdivs.appendChild(adiv);
+}
+
+function appendToMain(adiv) {
+    divmain.appendChild(adiv);
+    adiv.style.display="inline"; 
 }
 
 function init() {
@@ -38,9 +43,8 @@ function init() {
     divburnt.style.display="none";
     divplayers.style.display="none";
     divswpplayer.style.display="none";
-    
-    divmain.appendChild(divgameform);
-    divgameform.style.display="inline"; 
+
+    appendToMain(divgameform);    
 }
 
 function addplayer() {
@@ -59,7 +63,7 @@ function addplayer() {
 }
 
 function submitCreateGame(form) {
-    hide(gameform);
+    hide(divgameform);
     
     var players = new Array(numplayers);
 
@@ -71,8 +75,7 @@ function submitCreateGame(form) {
     game = new Game(form.numcards.value, players);
     game.deal();
     
-    divmain.appendChild(divtitle);
-    divtitle.style.display="inline";
+    appendToMain(divtitle);
 
     var pilecards = "";
     for (i = 0; i < game.pile.length; i++) {
@@ -81,27 +84,19 @@ function submitCreateGame(form) {
     }
     
     divpile.innerHTML = game.pile.length + " on pile:<br>" + pilecards;    
-    divmain.appendChild(divpile);
-
     divdeck.innerHTML = game.deck.length + " left on deck<br>";
-    divmain.appendChild(divdeck);
-    
     divburnt.innerHTML = game.burnt + " burnt<br>";
-    divmain.appendChild(divburnt);
 
-    divpile.style.display="inline";
-    divdeck.style.display="inline";
-    divburnt.style.display="inline";
+    appendToMain(divpile);
+    appendToMain(divdeck);
+    appendToMain(divburnt);
 
     var player = game.getCurrentPlayer();
 
     populatePlayerSwap(player);
     
-    divmain.appendChild(divswpplayer);
-    divswpplayer.style.display="inline";
-
-    divmain.appendChild(divswap);  
-    divswap.style.display="inline";
+    appendToMain(divswpplayer);
+    appendToMain(divswap); 
 }
 
 function swapCards(form) {
@@ -117,31 +112,34 @@ function swapCards(form) {
     form.faceupcard.value = ""; 
 }
 
-function populatePlayerSwap(player) {
+function populatePlayerSwap(aplayer) {
     var handcards = "Hand:<br>";
-    for (i = 0; i < player.hand.length; i++) {
+    for (i = 0; i < aplayer.hand.length; i++) {
         handcards += "(" + (i+1) + ")";
-        handcards += player.hand[i].toString();
-        if (i < player.hand.length-1) {
+        handcards += aplayer.hand[i].toString();
+        if (i < aplayer.hand.length-1) {
             handcards += ", ";
         }
     }
 
     var faceupcards = "Face up:<br>";
-    for (i = 0; i < player.faceup.length; i++) {
+    for (i = 0; i < aplayer.faceup.length; i++) {
         faceupcards += "(" + (i+1) + ")";
-        faceupcards += player.faceup[i].toString();
-        if (i < player.faceup.length-1) {
+        faceupcards += aplayer.faceup[i].toString();
+        if (i < aplayer.faceup.length-1) {
             faceupcards += ", ";
         }
     }
 
     divswpplayer.innerHTML = 
-        player.name + "<br>" + 
+        aplayer.name + "<br>" + 
         handcards + "<br>" + 
         faceupcards + "<br>";
 }
 
 function swapDone() {
-
+    game.nextPlayer();
+    
+    var player = game.getCurrentPlayer();
+    populatePlayerSwap(player);
 }

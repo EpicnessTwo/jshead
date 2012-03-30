@@ -10,6 +10,7 @@ function Game(numcards, players) {
     this.deal = deal;
     this.shuffle = shuffle;
     this.getCurrentPlayer = getCurrentPlayer;
+    this.nextPlayer = nextPlayer;
 
     var cardsNeeded = numcards * players.length * 3;
         
@@ -43,5 +44,12 @@ function Game(numcards, players) {
 
     function getCurrentPlayer() {
         return this.players[this.currentplayer];
+    }
+
+    function nextPlayer() {
+        this.currentplayer++;
+        if (this.currentplayer >= this.players.length) {
+            this.currentplayer = 0;
+        }
     }
 }
