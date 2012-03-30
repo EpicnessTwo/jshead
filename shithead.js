@@ -106,40 +106,39 @@ function swapCards(form) {
 
     player.swapCards(handcard, faceupcard);
    
-    populatePlayerSwap(player);
+    populatePlayerSwap();
  
     form.handcard.value = "";
     form.faceupcard.value = ""; 
 }
 
-function populatePlayerSwap(aplayer) {
+function populatePlayerSwap() {
+    var player = game.getCurrentPlayer();
     var handcards = "Hand:<br>";
-    for (i = 0; i < aplayer.hand.length; i++) {
+    for (i = 0; i < player.hand.length; i++) {
         handcards += "(" + (i+1) + ")";
-        handcards += aplayer.hand[i].toString();
-        if (i < aplayer.hand.length-1) {
+        handcards += player.hand[i].toString();
+        if (i < player.hand.length-1) {
             handcards += ", ";
         }
     }
 
     var faceupcards = "Face up:<br>";
-    for (i = 0; i < aplayer.faceup.length; i++) {
+    for (i = 0; i < player.faceup.length; i++) {
         faceupcards += "(" + (i+1) + ")";
-        faceupcards += aplayer.faceup[i].toString();
-        if (i < aplayer.faceup.length-1) {
+        faceupcards += player.faceup[i].toString();
+        if (i < player.faceup.length-1) {
             faceupcards += ", ";
         }
     }
 
     divswpplayer.innerHTML = 
-        aplayer.name + "<br>" + 
+        player.name + "<br>" + 
         handcards + "<br>" + 
         faceupcards + "<br>";
 }
 
 function swapDone() {
     game.nextPlayer();
-    
-    var player = game.getCurrentPlayer();
-    populatePlayerSwap(player);
+    populatePlayerSwap();
 }
