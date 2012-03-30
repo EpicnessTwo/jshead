@@ -7,11 +7,6 @@ function Game(numcards, players) {
     this.burnt = 0;
     this.currentplayer = 0;
 
-    this.deal = deal;
-    this.shuffle = shuffle;
-    this.getCurrentPlayer = getCurrentPlayer;
-    this.nextPlayer = nextPlayer;
-
     var cardsNeeded = numcards * players.length * 3;
         
     var singleDeck = new Array();
@@ -25,7 +20,7 @@ function Game(numcards, players) {
         this.deck = this.deck.concat(singleDeck);
     }   
 
-    function deal() {
+    this.deal = function() {
         this.shuffle();
         for (i = 0; i < this.players.length; i++) {
             for (j = 0; j < this.numcards; j++) {
@@ -34,22 +29,22 @@ function Game(numcards, players) {
                 this.players[i].dealToFaceDown(this.deck.pop());
             }
         }
-    }
+    };
 
-    function shuffle() {
+    this.shuffle = function() {
         for (var j, x, i = this.deck.length; i; 
             j = parseInt(Math.random() * i), x = 
                 this.deck[--i], this.deck[i] = this.deck[j], this.deck[j] = x);
-    }
+    };
 
-    function getCurrentPlayer() {
+    this.getCurrentPlayer = function() {
         return this.players[this.currentplayer];
-    }
+    };
 
-    function nextPlayer() {
+    this.nextPlayer = function() {
         this.currentplayer++;
         if (this.currentplayer >= this.players.length) {
             this.currentplayer = 0;
         }
-    }
+    };
 }

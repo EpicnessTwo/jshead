@@ -5,27 +5,22 @@ function Player(name, numCards) {
     this.faceup = new Array();
     this.facedown = new Array();
 
-    this.dealToHand = dealToHand;
-    this.dealToFaceUp = dealToFaceUp;
-    this.dealToFaceDown = dealToFaceDown;
-    this.swapCards = swapCards;
-
-    function dealToHand(card) {
+    this.dealToHand = function(card) {
         this.hand.push(card);
-    }
+    };
     
-    function dealToFaceUp(card) {
+    this.dealToFaceUp = function(card) {
         this.faceup.push(card);
-    }
+    };
 
-    function dealToFaceDown(card) {
+    this.dealToFaceDown = function(card) {
         this.facedown.push(card);
-    }
+    };
 
-    function swapCards(handcard, faceupcard) {
+    this.swapCards = function(handcard, faceupcard) {
         var tmp = this.hand[handcard];
         this.hand[handcard] = this.faceup[faceupcard];
         this.faceup[faceupcard] = tmp;
-    }
+    };
 }
 
