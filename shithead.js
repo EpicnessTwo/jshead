@@ -13,7 +13,6 @@ var divburnt;
 var divplayers;
 var divswpplayer;
 
-
 function hide(adiv) {
     adiv.style.display="none";
     divs.appendChild(adiv);
@@ -72,7 +71,7 @@ function submitCreateGame(form) {
     game = new Game(form.numcards.value, players);
     game.deal();
     
-    main.appendChild(divtitle);
+    divmain.appendChild(divtitle);
     divtitle.style.display="inline";
 
     var pilecards = "";
@@ -82,13 +81,13 @@ function submitCreateGame(form) {
     }
     
     divpile.innerHTML = game.pile.length + " on pile:<br>" + pilecards;    
-    main.appendChild(divpile);
+    divmain.appendChild(divpile);
 
     divdeck.innerHTML = game.deck.length + " left on deck<br>";
-    main.appendChild(divdeck);
+    divmain.appendChild(divdeck);
     
     divburnt.innerHTML = game.burnt + " burnt<br>";
-    main.appendChild(divburnt);
+    divmain.appendChild(divburnt);
 
     divpile.style.display="inline";
     divdeck.style.display="inline";
@@ -98,10 +97,10 @@ function submitCreateGame(form) {
 
     populatePlayerSwap(player);
     
-    main.appendChild(divswpplayer);
+    divmain.appendChild(divswpplayer);
     divswpplayer.style.display="inline";
 
-    main.appendChild(divswap);  
+    divmain.appendChild(divswap);  
     divswap.style.display="inline";
 }
 
