@@ -62,7 +62,7 @@ function addplayer() {
     }
 }
 
-function submitCreateGame(form) {
+function createGame(form) {
     hide(divgameform);
     
     var players = new Array(numplayers);
@@ -140,5 +140,9 @@ function populatePlayerSwap() {
 
 function swapDone() {
     game.nextPlayer();
-    populatePlayerSwap();
+    if (!game.isAtFirstPlayer()) {
+        populatePlayerSwap();
+    } else {
+        game.firstMove();
+    }
 }

@@ -39,9 +39,34 @@ function suitstr(suit) {
 function Card(rank, suit) {
     this.rank = rank;
     this.suit = suit;
-    this.toString = toString;
 
-    function toString() {
+    this.toString = function() {
         return rankstr(this.rank) + " of " + suitstr(this.suit);
+    };
+
+    this.isSpecial = function isSpecial() {
+        return (this.rank == 2 || this.rank == 7 || this.rank == 10);
+    };
+}
+
+function rankCompare(c1, c2) {
+    if (c1.rank < c2.rank) {
+        return -1;
+    } else if (c1.rank == c2.rank) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+function shCompare(c1, c2) {
+    if (c1.isSpecial() && c2.isSpecial()) {
+        return (rankCompare(c1, c2));
+    } else if (c1.isSpecial() && !c2.isSpecial()) {
+        return 1;
+    } else if (c2.isSpecial()) {
+        return -1;
+    } else {
+        return rankCompare(c1, c2);
     }
 }

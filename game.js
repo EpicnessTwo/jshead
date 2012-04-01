@@ -28,6 +28,7 @@ function Game(numcards, players) {
                 this.players[i].dealToFaceUp(this.deck.pop());
                 this.players[i].dealToFaceDown(this.deck.pop());
             }
+            this.players[i].sortHand();
         }
     };
 
@@ -47,4 +48,8 @@ function Game(numcards, players) {
             this.currentplayer = 0;
         }
     };
+
+    this.isAtFirstPlayer = function() {
+        return this.currentplayer == 0;
+    }
 }

@@ -22,5 +22,8 @@ function Player(name, numCards) {
         this.hand[handcard] = this.faceup[faceupcard];
         this.faceup[faceupcard] = tmp;
     };
-}
 
+    this.sortHand = function() {
+        this.hand.sort(shCompare);
+    }
+}
