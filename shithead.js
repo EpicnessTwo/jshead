@@ -10,6 +10,7 @@ var divtitle;
 var divpile;
 var divdeck;
 var divburnt;
+var divlastmove;
 var divplayers;
 var divswpplayer;
 
@@ -32,6 +33,7 @@ function init() {
     divpile = document.getElementById("pile");
     divdeck = document.getElementById("deck");
     divburnt = document.getElementById("burnt");
+    divlastmove = document.getElementById("lastmove");
     divplayers = document.getElementById("players");
     divswpplayer = document.getElementById("swp_player");
 
@@ -41,6 +43,7 @@ function init() {
     divpile.style.display="none";
     divdeck.style.display="none";
     divburnt.style.display="none";
+    divlastmove.style.display="none";
     divplayers.style.display="none";
     divswpplayer.style.display="none";
 
@@ -77,6 +80,19 @@ function createGame(form) {
     
     appendToMain(divtitle);
 
+    populateGame();
+    appendToMain(divpile);
+    appendToMain(divdeck);
+    appendToMain(divburnt);
+    appendToMain(divlastmove);
+
+    var player = game.getCurrentPlayer();
+    populatePlayerSwap(player);
+    appendToMain(divswpplayer);
+    appendToMain(divswap); 
+}
+
+function populateGame() {
     var pilecards = "";
     for (i = 0; i < game.pile.length; i++) {
         pilecards += game.pile[i].toString();
@@ -86,17 +102,7 @@ function createGame(form) {
     divpile.innerHTML = game.pile.length + " on pile:<br>" + pilecards;    
     divdeck.innerHTML = game.deck.length + " left on deck<br>";
     divburnt.innerHTML = game.burnt + " burnt<br>";
-
-    appendToMain(divpile);
-    appendToMain(divdeck);
-    appendToMain(divburnt);
-
-    var player = game.getCurrentPlayer();
-
-    populatePlayerSwap(player);
-    
-    appendToMain(divswpplayer);
-    appendToMain(divswap); 
+    divlastmove.innerHTML = game.lastmove + "<br>";
 }
 
 function swapCards(form) {
@@ -144,5 +150,6 @@ function swapDone() {
         populatePlayerSwap();
     } else {
         game.firstMove();
+        populateGame();
     }
 }

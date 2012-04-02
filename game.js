@@ -6,6 +6,7 @@ function Game(numcards, players) {
     this.pile = new Array();
     this.burnt = 0;
     this.currentplayer = 0;
+    this.lastmove = "";
 
     var cardsNeeded = numcards * players.length * 3;
         
@@ -74,9 +75,23 @@ function Game(numcards, players) {
             }
         }
         
+        this.setLastMove(toLay);
         this.playFromHand(toLay);
         player.sortHand();
         this.nextPlayer();
+    }
+
+    this.setLastMove = function(toLay) {
+        var player = this.players[this.currentplayer];
+        this.lastmove = "";
+        this.lastmove += player.name;
+        this.lastmove += " laid the ";
+        for (i = 0; i < toLay.length; i++) {
+            this.lastmove += player.hand[toLay[i]].toString();
+            this.lastmove += ", ";
+        }
+    
+        
     }
      
     this.playFromHand = function(toLay) {
