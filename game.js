@@ -52,4 +52,43 @@ function Game(numcards, players) {
     this.isAtFirstPlayer = function() {
         return this.currentplayer == 0;
     }
+
+    this.firstMove = function() {
+        var toLay = new Array();
+
+        this.currentplayer = 0;
+        var currentLowest = this.players[this.currentplayer].hand[0];
+        for (i = 0; i < this.numplayers ; i++) {
+            var playersLowest = this.players[i].hand[0];
+            if (shCompare(playersLowest, currentLowest) == -1) {
+                this.currentplayer = i;
+            }
+        }
+
+        var player = this.players[this.currentplayer];
+        var first = player.hand[0];
+        for (i = 0; i < this.numcards; i++) {
+            var current = this.players[this.currentplayer].hand[i];
+            if (rankCompare(current, first) == 0) {
+                toLay.push(i);
+            }
+        }
+        
+        this.playFromHand(toLay);
+        player.sortHand();
+        this.nextPlayer();
+    }
+     
+    this.playFromHand = function(toLay) {
+        var player = this.players[this.currentplayer];
+        for (i = 0; i < toLay.length; i++) {
+            this.pile.push(player.hand[toLay[i]]);
+        }
+
+        player.removeFromHand(toLay);
+        
+        while ((this.deck.length > 0) && (player.hand.length < this.numcards)) {
+            player.dealToHand(this.deck.pop());
+        }
+    }
 }

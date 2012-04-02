@@ -202,5 +202,127 @@ module("Player");
         equal(player.hand[4], twoc, "two fifth");
     });
 
+    test("Remove one card from hand", function() {
+        var player = new Player("James", 3);
+
+        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
+        var fourd = new Card(Rank.FOUR, Suit.DIAMONDS);
+        var jacks = new Card(Rank.JACK, Suit.SPADES);
+        var eighth = new Card(Rank.EIGHT, Suit.HEARTS);
+        var twoc = new Card(Rank.TWO, Suit.CLUBS);
+
+        player.dealToHand(twoc);
+        player.dealToHand(eighth);
+        player.dealToHand(fourd);
+        player.dealToHand(threed);
+        player.dealToHand(jacks);
+
+        var toRemove = [3];
+
+        player.removeFromHand(toRemove);
+
+        equal(player.hand.length, 4, "correct length");
+        ok(player.hand.indexOf(twoc) != -1, "contains two of clubs");
+        ok(player.hand.indexOf(eighth) != -1, "contains eight of hearts");
+        ok(player.hand.indexOf(fourd) != -1, "contains four of diamonds");
+        ok(player.hand.indexOf(jacks) != -1, "contains jack of spades");
+        ok(player.hand.indexOf(threed) == -1, "three of diamonds removed");
+    });
+
+    test("Remove two cards from hand", function() {
+        var player = new Player("James", 3);
+
+        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
+        var fourd = new Card(Rank.FOUR, Suit.DIAMONDS);
+        var jacks = new Card(Rank.JACK, Suit.SPADES);
+        var eighth = new Card(Rank.EIGHT, Suit.HEARTS);
+        var twoc = new Card(Rank.TWO, Suit.CLUBS);
+
+        player.dealToHand(twoc);
+        player.dealToHand(eighth);
+        player.dealToHand(fourd);
+        player.dealToHand(threed);
+        player.dealToHand(jacks);
+
+        var toRemove = [3, 1];
+
+        player.removeFromHand(toRemove);
+
+        equal(player.hand.length, 3, "correct length");
+        ok(player.hand.indexOf(twoc) != -1, "contains two of clubs");
+        ok(player.hand.indexOf(eighth) == -1, "eight of hearts removed");
+        ok(player.hand.indexOf(fourd) != -1, "contains four of diamonds");
+        ok(player.hand.indexOf(jacks) != -1, "contains jack of spades");
+        ok(player.hand.indexOf(threed) == -1, "three of diamonds removed");
+    });
+
+module("Game");
+
+    test("Create game", function() {
+        var player1 = new Player("James", 3);
+        var player2 = new Player("Dave", 3);
+        var players = new Array(2);
+
+        players[0] = player1;
+        players[1] = player2;
+
+        var game = new Game(3, players);
+        
+        equal(game.numplayers, 2);
+        equal(game.numcards, 3);
+        equal(game.players[0], player1);
+        equal(game.players[1], player2);
+        equal(game.deck.length, 52);
+        equal(game.pile.length, 0);
+        equal(game.burnt, 0);
+        equal(game.currentplayer, 0);
+    });
+
+    test("New game starts at first player", function() {
+        var player1 = new Player("James", 3);
+        var player2 = new Player("Dave", 3);
+        var players = new Array(2);
+
+        players[0] = player1;
+        players[1] = player2;
+
+        var game = new Game(3, players);
+        var current = game.getCurrentPlayer();
+
+        equal(current, player1);
+        ok(game.isAtFirstPlayer());
+    });
+
+    test("Next player moves to next player", function() {
+        var player1 = new Player("James", 3);
+        var player2 = new Player("Dave", 3);
+        var players = new Array(2);
+
+        players[0] = player1;
+        players[1] = player2;
+
+        var game = new Game(3, players);
+        game.nextPlayer();
+        var current = game.getCurrentPlayer();
+
+        equal(current, player2);
+    });
+        
+    test("Next player rolls", function() {
+        var player1 = new Player("James", 3);
+        var player2 = new Player("Dave", 3);
+        var players = new Array(2);
+
+        players[0] = player1;
+        players[1] = player2;
+
+        var game = new Game(3, players);
+        game.nextPlayer();
+        game.nextPlayer();
+        var current = game.getCurrentPlayer();
+
+        equal(current, player1);
+    });
+
 });
 

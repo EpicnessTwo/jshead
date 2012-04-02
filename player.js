@@ -26,4 +26,15 @@ function Player(name, numCards) {
     this.sortHand = function() {
         this.hand.sort(shCompare);
     }
+
+    this.removeFromHand = function(toRemove) {
+        var newHand = new Array();
+        for (i = 0; i < this.hand.length; i++) {
+            if (toRemove.indexOf(i) == -1) {
+                newHand.push(this.hand[i]);
+            }
+        }
+
+        this.hand = newHand;
+    }
 }
