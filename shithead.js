@@ -149,7 +149,54 @@ function swapDone() {
     if (!game.isAtFirstPlayer()) {
         populatePlayerSwap();
     } else {
+        hide(divswpplayer);
+        hide(divswap);
         game.firstMove();
         populateGame();
+        populatePlayers();
+        appendToMain(divplayers);
     }
+}
+
+function populatePlayers() {
+    var divcontent = "";
+    var player;
+
+    for (i = 0; i < game.players.length; i++) {
+        player = game.players[i];
+        divcontent += player.name + "<br>";
+
+        divcontent += "Hand:<br>";
+        for (j = 0; j < player.hand.length; j++) {
+            divcontent += "(" + (j+1) + ")";
+            divcontent += player.hand[j].toString();
+            if (j < player.hand.length-1) {
+                divcontent += ", ";
+            }
+        }
+
+        divcontent += "<br>";
+        divcontent += "Face up:<br>";
+        for (j = 0; j < player.faceup.length; j++) {
+            divcontent += "(" + (j+1) + ")";
+            divcontent += player.faceup[j].toString();
+            if (j < player.faceup.length-1) {
+                divcontent += ", ";
+            }
+        }
+        
+        divcontent += "<br>";
+        divcontent += "Face down:<br>";
+        for (j = 0; j < player.facedown.length; j++) {
+            divcontent += "(" + (j+1) + ")";
+            divcontent += "****";
+            if (j < player.facedown.length-1) {
+                divcontent += ", ";
+            }
+        }
+        
+        divcontent += "<br>";
+    }
+
+    divplayers.innerHTML = divcontent;
 }
