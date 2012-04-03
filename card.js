@@ -44,9 +44,13 @@ function Card(rank, suit) {
         return rankstr(this.rank) + " of " + suitstr(this.suit);
     };
 
-    this.isSpecial = function isSpecial() {
+    this.isSpecial = function() {
         return (this.rank == 2 || this.rank == 7 || this.rank == 10);
     };
+
+    this.isInvisible = function() {
+        return (this.rank == 7) 
+    }
 }
 
 function rankCompare(c1, c2) {

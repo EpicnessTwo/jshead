@@ -116,4 +116,45 @@ function Game(numcards, players) {
             this.nextPlayer();
         }
     }
+
+    this.currentPlayerCanLay = function() {
+        if (this.pile.length == 0) {
+            return true;
+        }
+
+        var player = this.players[this.currentplayer];
+
+        if (player.hasCardsInHand()) {
+            return canMoveWithOneOf(player.hand);
+        } else if (player.hasCardsInFaceUp()) {
+            return canMoveWithOneOf(player.faceup);
+        } else {
+            return false;
+        }
+    }
+
+    this.canMoveWithOneOf = function(cards) {
+        for (i = 0; i < cards.length; i++) {
+            if (canLay(cards[i], this.pile)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+function canLay(card, cards) {
+    if (cards.length == 0) {
+        return true;
+    } else if (card.isSpecial()) {
+        return true;
+    } else if (cards[cards.length - 1].isInvisible()) {
+        var newCards = cards.slice(0);
+        newCards.pop();
+        return canLay(card, newCards);
+    } else if (card.rank < cards[cards.length -1].rank) {
+        return false;
+    } else {
+        return true;
+    }
 }

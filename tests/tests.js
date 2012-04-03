@@ -26,6 +26,12 @@ module("Card");
 
         ok(card.isSpecial());
     });
+
+    test("Seven is invisible", function() {
+        var card = new Card(Rank.SEVEN, Suit.HEARTS);
+        
+        ok(card.isInvisible());
+    });
     
     test("Three is less than nine", function() {
         var three = new Card(Rank.THREE, Suit.DIAMONDS);
@@ -352,5 +358,104 @@ module("Game");
         equal(current, player1);
     });
 
+    test("Can lay three on nothing", function() {
+        var three = new Card(Rank.THREE, Suit.DIAMONDS);
+        var cards = new Array();
+
+        ok(canLay(three, cards));
+    });
+
+    test("Can lay three on three", function() {
+        var three1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var three2 = new Card(Rank.THREE, Suit.SPADES);
+        var cards = [three2];
+
+        ok(canLay(three1, cards));
+    });
+
+    test("Can lay three on two", function() {
+        var three = new Card(Rank.THREE, Suit.DIAMONDS);
+        var two = new Card(Rank.TWO, Suit.SPADES);
+        var cards = [two];
+
+        ok(canLay(three, cards));
+    });
+
+    test("Can lay three on invisible on nothing", function() {
+        var three = new Card(Rank.THREE, Suit.DIAMONDS);
+        var seven = new Card(Rank.SEVEN, Suit.SPADES);
+        var cards = [seven];
+
+        ok(canLay(three, cards));
+    });
+    
+    test("Can lay three on invisible on three", function() {
+        var three1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var seven = new Card(Rank.SEVEN, Suit.SPADES);
+        var three2 = new Card(Rank.THREE, Suit.SPADES);
+        var cards = [three2, seven];
+
+        ok(canLay(three1, cards));
+    });
+
+    test("Cannot lay three on invisible on four", function() {
+        var three = new Card(Rank.THREE, Suit.DIAMONDS);
+        var seven = new Card(Rank.SEVEN, Suit.HEARTS);
+        var four = new Card(Rank.FOUR, Suit.SPADES);
+        var cards = [four, seven];
+
+        ok(!canLay(three, cards));
+    });
+
+    test("Can lay three on two invisibles on three", function() {
+        var three1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var seven1 = new Card(Rank.SEVEN, Suit.HEARTS);
+        var seven2 = new Card(Rank.SEVEN, Suit.SPADES);
+        var three2 = new Card(Rank.THREE, Suit.SPADES);
+        var cards = [three2, seven2, seven1, three1];
+
+        ok(canLay(three1, cards));
+    });
+
+    test("Cannot lay three on four", function() {
+        var three = new Card(Rank.THREE, Suit.DIAMONDS);
+        var four = new Card(Rank.FOUR, Suit.SPADES);
+        var cards = [four];
+
+        ok(!canLay(three, cards));
+    });
+    
+    test("Cannot lay three on invisible on four", function() {
+        var three = new Card(Rank.THREE, Suit.DIAMONDS);
+        var seven = new Card(Rank.SEVEN, Suit.HEARTS);
+        var four = new Card(Rank.FOUR, Suit.SPADES);
+        var cards = [four, seven];
+
+        ok(!canLay(three, cards));
+    });
+
+    test("Can lay two on nine", function() {
+        var two = new Card(Rank.TWO, Suit.DIAMONDS);
+        var nine = new Card(Rank.NINE, Suit.HEARTS);
+        var cards = [nine];
+
+        ok(canLay(two, cards));
+    });
+
+    test("Can lay seven on nine", function() {
+        var seven = new Card(Rank.SEVEN, Suit.DIAMONDS);
+        var nine = new Card(Rank.NINE, Suit.HEARTS);
+        var cards = [nine];
+
+        ok(canLay(seven, cards));
+    });
+    
+    test("Can lay ten on ace", function() {
+        var ten = new Card(Rank.TEN, Suit.DIAMONDS);
+        var ace = new Card(Rank.ACE, Suit.HEARTS);
+        var cards = [ace];
+
+        ok(canLay(ten, cards));
+    });
 });
 

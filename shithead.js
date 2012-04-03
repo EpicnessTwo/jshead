@@ -98,19 +98,6 @@ function createGame(form) {
     appendToMain(divswap); 
 }
 
-function updateGame() {
-    var pilecards = "";
-    for (i = game.pile.length - 1; i >= 0; i--) {
-        pilecards += game.pile[i].toString();
-        pilecards += "<br>";
-    }
-    
-    divpile.innerHTML = game.pile.length + " on pile:<br>" + pilecards;    
-    divdeck.innerHTML = game.deck.length + " left on deck<br>";
-    divburnt.innerHTML = game.burnt + " burnt<br>";
-    divlastmove.innerHTML = game.lastmove + "<br>";
-}
-
 function swapCards(form) {
     var player = game.getCurrentPlayer();
     var handcard = form.handcard.value - 1;
@@ -122,15 +109,6 @@ function swapCards(form) {
  
     form.handcard.value = "";
     form.faceupcard.value = ""; 
-}
-
-function updatePlayerSwap() {
-    var player = game.getCurrentPlayer();
-
-    divswpplayer.innerHTML = 
-        player.name + "<br>" + 
-        showCards(player.hand, "Hand", false) + "<br>" + 
-        showCards(player.faceup, "Face up", false) + "<br>";
 }
 
 function swapDone() {
@@ -150,6 +128,47 @@ function swapDone() {
     }
 }
 
+function makeMove(form) {
+    var choice = form.choice.value - 1;
+    var toLay = new Array();
+    toLay.push(choice);
+    game.makeMove(toLay);
+    updateGame();
+    updatePlayers();
+    updateMove();
+    form.choice.value = "";
+}
+
+function showCards(cards, name, hide) {
+    var content = name + ":<br>";
+    for (c = 0; c < cards.length; c++) {
+        content += "(" + (c+1) + ")";
+        if (hide) {
+            content += "****";
+        } else {
+            content += cards[c].toString();
+        }
+        if (c < cards.length-1) {
+            content += ", ";
+        }
+    }
+
+    return content;
+}
+
+function updateGame() {
+    var pilecards = "";
+    for (i = game.pile.length - 1; i >= 0; i--) {
+        pilecards += game.pile[i].toString();
+        pilecards += "<br>";
+    }
+    
+    divpile.innerHTML = game.pile.length + " on pile:<br>" + pilecards;    
+    divdeck.innerHTML = game.deck.length + " left on deck<br>";
+    divburnt.innerHTML = game.burnt + " burnt<br>";
+    divlastmove.innerHTML = game.lastmove + "<br>";
+}
+
 function updateMove() {
     var player = game.getCurrentPlayer();
     var divcontent = player.name;
@@ -166,15 +185,13 @@ function updateMove() {
     divmove.innerHTML = divcontent;
 }
 
-function makeMove(form) {
-    var choice = form.choice.value - 1;
-    var toLay = new Array();
-    toLay.push(choice);
-    game.makeMove(toLay);
-    updateGame();
-    updatePlayers();
-    updateMove();
-    form.choice.value = "";
+function updatePlayerSwap() {
+    var player = game.getCurrentPlayer();
+
+    divswpplayer.innerHTML = 
+        player.name + "<br>" + 
+        showCards(player.hand, "Hand", false) + "<br>" + 
+        showCards(player.faceup, "Face up", false) + "<br>";
 }
 
 function updatePlayers() {
@@ -195,19 +212,3 @@ function updatePlayers() {
     divplayers.innerHTML = divcontent;
 }
 
-function showCards(cards, name, hide) {
-    var content = name + ":<br>";
-    for (c = 0; c < cards.length; c++) {
-        content += "(" + (c+1) + ")";
-        if (hide) {
-            content += "****";
-        } else {
-            content += cards[c].toString();
-        }
-        if (c < cards.length-1) {
-            content += ", ";
-        }
-    }
-
-    return content;
-}
