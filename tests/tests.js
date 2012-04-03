@@ -256,6 +256,34 @@ module("Player");
         ok(player.hand.indexOf(threed) == -1, "three of diamonds removed");
     });
 
+    test("Has cards in hand", function() {
+        var player = new Player("James", 3);
+        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
+        player.dealToHand(threed);
+
+        ok(player.hasCardsInHand());
+    });
+
+    test("Does not have cards in hand", function() {
+        var player = new Player("James", 3);
+
+        ok(!player.hasCardsInHand());
+    });
+
+    test("Has cards in faceup", function() {
+        var player = new Player("James", 3);
+        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
+        player.dealToFaceUp(threed);
+
+        ok(player.hasCardsInFaceUp());
+    });
+
+    test("Does not have cards in faceup", function() {
+        var player = new Player("James", 3);
+
+        ok(!player.hasCardsInFaceUp());
+    });
+
 module("Game");
 
     test("Create game", function() {

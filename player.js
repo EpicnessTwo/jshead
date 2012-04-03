@@ -37,4 +37,12 @@ function Player(name, numCards) {
 
         this.hand = newHand;
     }
+
+    this.hasCardsInHand = function() {
+        return this.hand.length > 0;
+    }
+
+    this.hasCardsInFaceUp = function() {
+        return this.faceup.length > 0;
+    }
 }

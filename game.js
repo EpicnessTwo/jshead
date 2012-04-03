@@ -106,4 +106,14 @@ function Game(numcards, players) {
             player.dealToHand(this.deck.pop());
         }
     }
+
+    this.makeMove = function(toLay) {
+        var player = this.players[this.currentplayer];
+        if (player.hasCardsInHand()) {
+            this.setLastMove(toLay);
+            this.playFromHand(toLay);
+            player.sortHand();
+            this.nextPlayer();
+        }
+    }
 }

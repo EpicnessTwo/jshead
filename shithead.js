@@ -13,6 +13,8 @@ var divburnt;
 var divlastmove;
 var divplayers;
 var divswpplayer;
+var divmove;
+var divmovechoice;
 
 function hide(adiv) {
     adiv.style.display="none";
@@ -36,6 +38,8 @@ function init() {
     divlastmove = document.getElementById("lastmove");
     divplayers = document.getElementById("players");
     divswpplayer = document.getElementById("swp_player");
+    divmove = document.getElementById("move");
+    divmovechoice = document.getElementById("movechoice");
 
     divdivs.style.display="none";   
     divswap.style.display="none";
@@ -46,6 +50,8 @@ function init() {
     divlastmove.style.display="none";
     divplayers.style.display="none";
     divswpplayer.style.display="none";
+    divmove.style.display="none";
+    divmovechoice.style.display="none";
 
     appendToMain(divgameform);    
 }
@@ -94,7 +100,7 @@ function createGame(form) {
 
 function populateGame() {
     var pilecards = "";
-    for (i = 0; i < game.pile.length; i++) {
+    for (i = game.pile.length - 1; i >= 0; i--) {
         pilecards += game.pile[i].toString();
         pilecards += "<br>";
     }
@@ -154,8 +160,37 @@ function swapDone() {
         game.firstMove();
         populateGame();
         populatePlayers();
+        populateMove();
         appendToMain(divplayers);
+        appendToMain(divmove);
+        appendToMain(divmovechoice);
     }
+}
+
+function populateMove() {
+    var player = game.getCurrentPlayer();
+    var divcontent = player.name;
+    divmove.innerHTML = player.name;
+    
+    if (player.hasCardsInHand()) {
+        divcontent += ", choose cards from hand:<br>";
+    } else if (player.hasCardsInFaceUp()) {
+        divcontent += ", choose cards from face up:<br>";
+    } else {
+        divcontent += ", choose a card from down:<br>";
+    }
+
+    divmove.innerHTML = divcontent;
+}
+
+function makeMove(form) {
+    var choice = form.choice.value - 1;
+    var toLay = new Array();
+    toLay.push(choice);
+    game.makeMove(toLay);
+    populateGame();
+    populatePlayers();
+    populateMove();
 }
 
 function populatePlayers() {
