@@ -126,13 +126,11 @@ function swapCards(form) {
 
 function updatePlayerSwap() {
     var player = game.getCurrentPlayer();
-    var handcards = showCards(player.hand, "Hand", false);
-    var faceupcards = showCards(player.faceup, "Face up", false);
 
     divswpplayer.innerHTML = 
         player.name + "<br>" + 
-        handcards + "<br>" + 
-        faceupcards + "<br>";
+        showCards(player.hand, "Hand", false) + "<br>" + 
+        showCards(player.faceup, "Face up", false) + "<br>";
 }
 
 function swapDone() {
@@ -186,14 +184,11 @@ function updatePlayers() {
     for (i = 0; i < game.players.length; i++) {
         player = game.players[i];
         divcontent += player.name + "<br>";
-        var handcards = showCards(player.hand, "Hand", false);
-        divcontent += handcards;
+        divcontent += showCards(player.hand, "Hand", false);
         divcontent += "<br>";
-        var faceupcards = showCards(player.faceup, "Face up", false);        
-        divcontent += faceupcards;
+        divcontent += showCards(player.faceup, "Face up", false);        
         divcontent += "<br>";
-        var facedowncards = showCards(player.facedown, "Face down", true);
-        divcontent += facedowncards;
+        divcontent += showCards(player.facedown, "Face down", true);
         divcontent += "<br>";
     }
 
