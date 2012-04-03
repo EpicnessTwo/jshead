@@ -86,19 +86,19 @@ function createGame(form) {
     
     appendToMain(divtitle);
 
-    populateGame();
+    updateGame();
     appendToMain(divpile);
     appendToMain(divdeck);
     appendToMain(divburnt);
     appendToMain(divlastmove);
 
     var player = game.getCurrentPlayer();
-    populatePlayerSwap(player);
+    updatePlayerSwap(player);
     appendToMain(divswpplayer);
     appendToMain(divswap); 
 }
 
-function populateGame() {
+function updateGame() {
     var pilecards = "";
     for (i = game.pile.length - 1; i >= 0; i--) {
         pilecards += game.pile[i].toString();
@@ -118,31 +118,16 @@ function swapCards(form) {
 
     player.swapCards(handcard, faceupcard);
    
-    populatePlayerSwap();
+    updatePlayerSwap();
  
     form.handcard.value = "";
     form.faceupcard.value = ""; 
 }
 
-function populatePlayerSwap() {
+function updatePlayerSwap() {
     var player = game.getCurrentPlayer();
-    var handcards = "Hand:<br>";
-    for (i = 0; i < player.hand.length; i++) {
-        handcards += "(" + (i+1) + ")";
-        handcards += player.hand[i].toString();
-        if (i < player.hand.length-1) {
-            handcards += ", ";
-        }
-    }
-
-    var faceupcards = "Face up:<br>";
-    for (i = 0; i < player.faceup.length; i++) {
-        faceupcards += "(" + (i+1) + ")";
-        faceupcards += player.faceup[i].toString();
-        if (i < player.faceup.length-1) {
-            faceupcards += ", ";
-        }
-    }
+    var handcards = showCards(player.hand, "Hand", false);
+    var faceupcards = showCards(player.faceup, "Face up", false);
 
     divswpplayer.innerHTML = 
         player.name + "<br>" + 
@@ -153,21 +138,21 @@ function populatePlayerSwap() {
 function swapDone() {
     game.nextPlayer();
     if (!game.isAtFirstPlayer()) {
-        populatePlayerSwap();
+        updatePlayerSwap();
     } else {
         hide(divswpplayer);
         hide(divswap);
         game.firstMove();
-        populateGame();
-        populatePlayers();
-        populateMove();
+        updateGame();
+        updatePlayers();
+        updateMove();
         appendToMain(divplayers);
         appendToMain(divmove);
         appendToMain(divmovechoice);
     }
 }
 
-function populateMove() {
+function updateMove() {
     var player = game.getCurrentPlayer();
     var divcontent = player.name;
     divmove.innerHTML = player.name;
@@ -188,50 +173,46 @@ function makeMove(form) {
     var toLay = new Array();
     toLay.push(choice);
     game.makeMove(toLay);
-    populateGame();
-    populatePlayers();
-    populateMove();
+    updateGame();
+    updatePlayers();
+    updateMove();
+    form.choice.value = "";
 }
 
-function populatePlayers() {
+function updatePlayers() {
     var divcontent = "";
     var player;
 
     for (i = 0; i < game.players.length; i++) {
         player = game.players[i];
         divcontent += player.name + "<br>";
-
-        divcontent += "Hand:<br>";
-        for (j = 0; j < player.hand.length; j++) {
-            divcontent += "(" + (j+1) + ")";
-            divcontent += player.hand[j].toString();
-            if (j < player.hand.length-1) {
-                divcontent += ", ";
-            }
-        }
-
+        var handcards = showCards(player.hand, "Hand", false);
+        divcontent += handcards;
         divcontent += "<br>";
-        divcontent += "Face up:<br>";
-        for (j = 0; j < player.faceup.length; j++) {
-            divcontent += "(" + (j+1) + ")";
-            divcontent += player.faceup[j].toString();
-            if (j < player.faceup.length-1) {
-                divcontent += ", ";
-            }
-        }
-        
+        var faceupcards = showCards(player.faceup, "Face up", false);        
+        divcontent += faceupcards;
         divcontent += "<br>";
-        divcontent += "Face down:<br>";
-        for (j = 0; j < player.facedown.length; j++) {
-            divcontent += "(" + (j+1) + ")";
-            divcontent += "****";
-            if (j < player.facedown.length-1) {
-                divcontent += ", ";
-            }
-        }
-        
+        var facedowncards = showCards(player.facedown, "Face down", true);
+        divcontent += facedowncards;
         divcontent += "<br>";
     }
 
     divplayers.innerHTML = divcontent;
+}
+
+function showCards(cards, name, hide) {
+    var content = name + ":<br>";
+    for (c = 0; c < cards.length; c++) {
+        content += "(" + (c+1) + ")";
+        if (hide) {
+            content += "****";
+        } else {
+            content += cards[c].toString();
+        }
+        if (c < cards.length-1) {
+            content += ", ";
+        }
+    }
+
+    return content;
 }
