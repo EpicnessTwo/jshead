@@ -52,7 +52,7 @@
 
     <div id="players"></div>
     
-    <div id="move"></div>
+    <div id="message"></div>
 
     <div id="movechoice">
         <form id="frm_movechoice" method="post">
@@ -60,6 +60,10 @@
             <input id="makemove" type="submit" value="Move"
                 onClick="makeMove(this.form);return false"/>
         </form>
+    </div>
+    
+    <div id="pickup">
+        <input type="button" value="Pick up" onClick="pickup();"/>
     </div>
 
 </div>

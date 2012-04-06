@@ -13,8 +13,9 @@ var divburnt;
 var divlastmove;
 var divplayers;
 var divswpplayer;
-var divmove;
+var divmessage;
 var divmovechoice;
+var divpickup;
 
 function hide(adiv) {
     adiv.style.display="none";
@@ -38,8 +39,9 @@ function init() {
     divlastmove = document.getElementById("lastmove");
     divplayers = document.getElementById("players");
     divswpplayer = document.getElementById("swp_player");
-    divmove = document.getElementById("move");
+    divmessage = document.getElementById("message");
     divmovechoice = document.getElementById("movechoice");
+    divpickup = document.getElementById("pickup");
 
     divdivs.style.display="none";   
     divswap.style.display="none";
@@ -50,8 +52,9 @@ function init() {
     divlastmove.style.display="none";
     divplayers.style.display="none";
     divswpplayer.style.display="none";
-    divmove.style.display="none";
+    divmessage.style.display="none";
     divmovechoice.style.display="none";
+    divpickup.style.display="none";
 
     appendToMain(divgameform);    
 }
@@ -121,10 +124,23 @@ function swapDone() {
         game.firstMove();
         updateGame();
         updatePlayers();
-        updateMove();
         appendToMain(divplayers);
-        appendToMain(divmove);
+
+        tryMove();
+    }
+}
+
+function tryMove() {
+    if (game.currentPlayerCanLay()) {
+        showMoveMessage();
+        appendToMain(divmessage);
+        hide(divpickup);
         appendToMain(divmovechoice);
+    } else {
+        showPickupMessage();
+        appendToMain(divmessage);
+        hide(divmovechoice);
+        appendToMain(divpickup);
     }
 }
 
@@ -133,10 +149,18 @@ function makeMove(form) {
     var toLay = new Array();
     toLay.push(choice);
     game.makeMove(toLay);
+    form.choice.value = "";
     updateGame();
     updatePlayers();
-    updateMove();
-    form.choice.value = "";
+    tryMove();
+}
+
+function pickup() {
+    game.pickup();
+    hide(divpickup);
+    updateGame();
+    updatePlayers();
+    tryMove();
 }
 
 function showCards(cards, name, hide) {
@@ -169,10 +193,10 @@ function updateGame() {
     divlastmove.innerHTML = game.lastmove + "<br>";
 }
 
-function updateMove() {
+function showMoveMessage() {
     var player = game.getCurrentPlayer();
     var divcontent = player.name;
-    divmove.innerHTML = player.name;
+    divmessage.innerHTML = player.name;
     
     if (player.hasCardsInHand()) {
         divcontent += ", choose cards from hand:<br>";
@@ -182,7 +206,12 @@ function updateMove() {
         divcontent += ", choose a card from down:<br>";
     }
 
-    divmove.innerHTML = divcontent;
+    divmessage.innerHTML = divcontent;
+}
+
+function showPickupMessage() {
+    var player = game.getCurrentPlayer();
+    divmessage.innerHTML = "OH NO! " + player.name + ", you must pickup.";
 }
 
 function updatePlayerSwap() {

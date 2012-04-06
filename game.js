@@ -90,8 +90,11 @@ function Game(numcards, players) {
             this.lastmove += player.hand[toLay[i]].toString();
             this.lastmove += ", ";
         }
-    
-        
+    }
+
+    this.setLastMovePickup = function() {
+        var player = this.players[this.currentplayer];
+        this.lastmove = player.name + " picked up.";
     }
      
     this.playFromHand = function(toLay) {
@@ -109,12 +112,22 @@ function Game(numcards, players) {
 
     this.makeMove = function(toLay) {
         var player = this.players[this.currentplayer];
+
         if (player.hasCardsInHand()) {
             this.setLastMove(toLay);
             this.playFromHand(toLay);
             player.sortHand();
             this.nextPlayer();
         }
+    }
+
+    this.pickup = function() {
+        var player = this.players[this.currentplayer];
+        player.hand = player.hand.concat(this.pile);
+        player.sortHand();
+        this.pile = [];
+        this.setLastMovePickup();
+        this.nextPlayer();
     }
 
     this.currentPlayerCanLay = function() {
@@ -125,9 +138,9 @@ function Game(numcards, players) {
         var player = this.players[this.currentplayer];
 
         if (player.hasCardsInHand()) {
-            return canMoveWithOneOf(player.hand);
+            return this.canMoveWithOneOf(player.hand);
         } else if (player.hasCardsInFaceUp()) {
-            return canMoveWithOneOf(player.faceup);
+            return this.canMoveWithOneOf(player.faceup);
         } else {
             return false;
         }
