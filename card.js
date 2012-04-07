@@ -49,8 +49,16 @@ function Card(rank, suit) {
     };
 
     this.isInvisible = function() {
-        return (this.rank == 7) 
-    }
+        return (this.rank == 7);
+    };
+
+    this.isBurnCard = function() {
+        return (this.rank == 10);
+    };
+
+    this.isMissAGoCard = function() {
+        return (this.rank == 8);
+    };
 }
 
 function rankCompare(c1, c2) {

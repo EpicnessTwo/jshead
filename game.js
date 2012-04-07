@@ -48,11 +48,17 @@ function Game(numcards, players) {
         if (this.currentplayer >= this.players.length) {
             this.currentplayer = 0;
         }
+        while (!this.players[this.currentplayer].hasCards()) {
+            this.currentplayer++;
+            if (this.currentplayer >= this.players.length) {
+                this.currentplayer = 0;
+            }
+        }
     };
 
     this.isAtFirstPlayer = function() {
         return this.currentplayer == 0;
-    }
+    };
 
     this.firstMove = function() {
         var toLay = new Array();
@@ -79,7 +85,7 @@ function Game(numcards, players) {
         this.playFromHand(toLay);
         player.sortHand();
         this.nextPlayer();
-    }
+    };
 
     this.setLastMove = function(toLay) {
         var player = this.players[this.currentplayer];
@@ -90,12 +96,12 @@ function Game(numcards, players) {
             this.lastmove += player.hand[toLay[i]].toString();
             this.lastmove += ", ";
         }
-    }
+    };
 
     this.setLastMovePickup = function() {
         var player = this.players[this.currentplayer];
         this.lastmove = player.name + " picked up.";
-    }
+    };
      
     this.playFromHand = function(toLay) {
         var player = this.players[this.currentplayer];
@@ -108,7 +114,7 @@ function Game(numcards, players) {
         while ((this.deck.length > 0) && (player.hand.length < this.numcards)) {
             player.dealToHand(this.deck.pop());
         }
-    }
+    };
 
     this.makeMove = function(toLay) {
         var player = this.players[this.currentplayer];
@@ -117,9 +123,54 @@ function Game(numcards, players) {
             this.setLastMove(toLay);
             this.playFromHand(toLay);
             player.sortHand();
+        }
+
+        this.processSpecialCards();
+    };
+    
+    this.processSpecialCards = function() {
+        if (this.burnCardLaid()) {
+            this.burnPile();
+        } else if (this.missAGoLaid()) {
+            this.missAGo();
+        } else {
             this.nextPlayer();
         }
-    }
+    };
+
+    this.burnCardLaid = function() {
+        if (this.pile[this.pile.length - 1].isBurnCard()) {
+            return true;
+        } else if (this.pile.length > 3) {
+            var lastFour = new Array();
+            lastFour.push(this.pile[this.pile.length - 1]);
+            lastFour.push(this.pile[this.pile.length - 2]);
+            lastFour.push(this.pile[this.pile.length - 3]);
+            lastFour.push(this.pile[this.pile.length - 4]);
+    
+            if (allRanksEqual(lastFour)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    this.burnPile = function() {
+        var player = this.players[this.currentplayer];
+        this.burnt += this.pile.length;
+        this.pile = new Array();
+
+        this.lastmove = player.name;
+        this.lastmove += " burnt the pile.";
+
+        if (!player.hasCards()) {
+            nextPlayer();
+        }
+    };
+
+    this.missAGoLaid = function() {
+        return (this.pile[this.pile.length - 1].isMissAGoCard()) ;
+    };
 
     this.pickup = function() {
         var player = this.players[this.currentplayer];
@@ -128,7 +179,15 @@ function Game(numcards, players) {
         this.pile = [];
         this.setLastMovePickup();
         this.nextPlayer();
-    }
+    };
+
+    this.missAGo = function() {
+        var player = this.players[this.currentplayer];
+        this.lastmove = player.name;
+        this.lastmove += " laid miss a go card.";
+        this.nextPlayer();
+        this.nextPlayer();
+    };
 
     this.currentPlayerCanLay = function() {
         if (this.pile.length == 0) {
@@ -144,7 +203,7 @@ function Game(numcards, players) {
         } else {
             return false;
         }
-    }
+    };
 
     this.canMoveWithOneOf = function(cards) {
         for (i = 0; i < cards.length; i++) {
@@ -153,7 +212,7 @@ function Game(numcards, players) {
             }
         }
         return false;
-    }
+    };
 
     this.validMove = function(choices) {
         var player = this.players[this.currentplayer];
@@ -177,7 +236,7 @@ function Game(numcards, players) {
             }
         }
         return this.validMoveWithCards(cards);
-    }
+    };
 
     this.validMoveWithCards = function(cards) {
         if (!allRanksEqual(cards)) {
@@ -185,7 +244,7 @@ function Game(numcards, players) {
         } else {
             return canLay(cards[0], this.pile);
         }
-    }
+    };
 }
 
 function canLay(card, cards) {

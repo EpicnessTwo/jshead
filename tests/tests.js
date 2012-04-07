@@ -79,6 +79,30 @@ module("Card");
         ok(allRanksEqual(cards));
     });
 
+    test("Is burn card", function() {
+        var ten = new Card(Rank.TEN, Suit.CLUBS);
+        
+        ok(ten.isBurnCard());
+    });
+
+    test("Is miss a go card", function() {
+        var eight = new Card(Rank.EIGHT, Suit.CLUBS);
+        
+        ok(eight.isMissAGoCard());
+    });
+
+    test("Three is not burn card", function() {
+        var three = new Card(Rank.THREE, Suit.CLUBS);
+        
+        ok(!three.isBurnCard());
+    });
+
+    test("Nine is not miss a go card", function() {
+        var nine = new Card(Rank.NINE, Suit.CLUBS);
+        
+        ok(!nine.isMissAGoCard());
+    });
+
 module("Player");
 
     test("Create player", function() {
@@ -301,6 +325,46 @@ module("Player");
         ok(!player.hasCardsInFaceUp());
     });
 
+    test("Has cards when has hand", function() {
+        var player = new Player("James", 3);
+        
+        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var card2 = new Card(Rank.TWO, Suit.HEARTS);
+        
+        player.dealToHand(card1);
+        player.dealToHand(card2);
+        
+        ok(player.hasCards());
+    });
+
+    test("Has cards when has faceup", function() {
+        var player = new Player("James", 3);
+        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var card2 = new Card(Rank.TWO, Suit.HEARTS);
+        
+        player.dealToFaceUp(card1);
+        player.dealToFaceUp(card2);
+        
+        ok(player.hasCards());
+    });
+    
+    test("Has cards when has facedown", function() {
+        var player = new Player("James", 3);
+        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var card2 = new Card(Rank.TWO, Suit.HEARTS);
+        
+        player.dealToFaceDown(card1);
+        player.dealToFaceDown(card2);
+        
+        ok(player.hasCards());
+    });
+
+    test("Does not have cards", function() {
+        var player = new Player("James", 3);
+        
+        ok(!player.hasCards());
+    });
+
 module("Game");
 
     test("Create game", function() {
@@ -340,7 +404,11 @@ module("Game");
 
     test("Next player moves to next player", function() {
         var player1 = new Player("James", 3);
+        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        player1.dealToHand(card1);
         var player2 = new Player("Dave", 3);
+        var card2 = new Card(Rank.NINE, Suit.SPADES);
+        player2.dealToHand(card2);
         var players = new Array(2);
 
         players[0] = player1;
@@ -355,7 +423,11 @@ module("Game");
         
     test("Next player rolls", function() {
         var player1 = new Player("James", 3);
+        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        player1.dealToHand(card1);
         var player2 = new Player("Dave", 3);
+        var card2 = new Card(Rank.NINE, Suit.SPADES);
+        player2.dealToHand(card2);
         var players = new Array(2);
 
         players[0] = player1;
@@ -367,6 +439,27 @@ module("Game");
         var current = game.getCurrentPlayer();
 
         equal(current, player1);
+    });
+
+    test("Next player skips when no cards", function() {
+        var player1 = new Player("James", 3);
+        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        player1.dealToHand(card1);
+        var player2 = new Player("Dave", 3);
+        var card2 = new Card(Rank.NINE, Suit.SPADES);
+        player2.dealToHand(card2);
+        var playerNoCards = new Player("NoCards", 3);
+        var players = new Array(3);
+
+        players[0] = player1;
+        players[1] = playerNoCards;
+        players[2] = player2;
+
+        var game = new Game(3, players);
+        game.nextPlayer();
+        var current = game.getCurrentPlayer();
+
+        equal(current, player2);
     });
 
     test("Can lay three on nothing", function() {

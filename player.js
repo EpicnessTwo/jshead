@@ -25,7 +25,7 @@ function Player(name, numCards) {
 
     this.sortHand = function() {
         this.hand.sort(shCompare);
-    }
+    };
 
     this.removeFromHand = function(toRemove) {
         var newHand = new Array();
@@ -36,13 +36,17 @@ function Player(name, numCards) {
         }
 
         this.hand = newHand;
-    }
+    };
 
     this.hasCardsInHand = function() {
         return this.hand.length > 0;
-    }
+    };
 
     this.hasCardsInFaceUp = function() {
         return this.faceup.length > 0;
-    }
+    };
+
+    this.hasCards = function () {
+        return (this.hasCardsInHand() || this.hasCardsInFaceUp() || this.facedown.length > 0);
+    };
 }
