@@ -110,6 +110,7 @@ function swapCards(form) {
     var faceupcard = form.faceupcard.value -1;
 
     player.swapCards(handcard, faceupcard);
+    player.sortHand();
    
     updatePlayerSwap();
  
