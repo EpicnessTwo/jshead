@@ -154,6 +154,38 @@ function Game(numcards, players) {
         }
         return false;
     }
+
+    this.validMove = function(choices) {
+        var player = this.players[this.currentplayer];
+        var cards = new Array();
+
+        if (player.hasCardsInHand()) {
+            for (i = 0; i < choices.length; i++) {
+                if (i >= player.hand.length) {
+                    return false;
+                } else {
+                    cards.push(player.hand[choices[i]]);
+                }
+            }
+        } else {
+            for (i = 0; i < choices.length; i++) {
+                if (i >= player.faceup.length) {
+                    return false;
+                } else {
+                    cards.push(player.faceup[choices[i]]);
+                }
+            }
+        }
+        return this.validMoveWithCards(cards);
+    }
+
+    this.validMoveWithCards = function(cards) {
+        if (!allRanksEqual(cards)) {
+            return false;
+        } else {
+            return canLay(cards[0], this.pile);
+        }
+    }
 }
 
 function canLay(card, cards) {

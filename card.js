@@ -74,3 +74,15 @@ function shCompare(c1, c2) {
         return rankCompare(c1, c2);
     }
 }
+
+function allRanksEqual(cards) {
+    var first = cards[0];
+
+    for (i = 1; i < cards.length; i++) {
+        if (!(rankCompare(first, cards[i]) == 0)) {
+            return false;
+        }
+    }
+    
+    return true;
+}

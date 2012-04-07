@@ -16,6 +16,7 @@ var divswpplayer;
 var divmessage;
 var divmovechoice;
 var divpickup;
+var divbadmove;
 
 function hide(adiv) {
     adiv.style.display="none";
@@ -42,6 +43,7 @@ function init() {
     divmessage = document.getElementById("message");
     divmovechoice = document.getElementById("movechoice");
     divpickup = document.getElementById("pickup");
+    divbadmove = document.getElementById("badmove");
 
     divdivs.style.display="none";   
     divswap.style.display="none";
@@ -55,6 +57,7 @@ function init() {
     divmessage.style.display="none";
     divmovechoice.style.display="none";
     divpickup.style.display="none";
+    divbadmove.style.display="none";
 
     appendToMain(divgameform);    
 }
@@ -147,11 +150,18 @@ function tryMove() {
 function makeMove(form) {
     var choice = form.choice.value - 1;
     var toLay = new Array();
+
+    hide(divbadmove);
     toLay.push(choice);
-    game.makeMove(toLay);
-    form.choice.value = "";
-    updateGame();
-    updatePlayers();
+    if (game.validMove(toLay)) {
+        game.makeMove(toLay);
+        form.choice.value = "";
+        updateGame();
+        updatePlayers();
+    } else {
+        appendToMain(divbadmove);
+        form.choice.value = "";
+    }
     tryMove();
 }
 

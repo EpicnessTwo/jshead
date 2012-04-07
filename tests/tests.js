@@ -40,32 +40,43 @@ module("Card");
         equal(shCompare(three, nine), -1);
     });
 
-    test("Three is less than Four", function () {
+    test("Three is less than Four", function() {
         var three = new Card(Rank.THREE, Suit.DIAMONDS);
         var four = new Card(Rank.FOUR, Suit.HEARTS);
 
         equal(shCompare(three, four), -1);
     });
         
-    test("Three is same as Three", function () {
+    test("Three is same as Three", function() {
         var threed = new Card(Rank.THREE, Suit.DIAMONDS);
         var threec = new Card(Rank.THREE, Suit.CLUBS);
 
         equal(shCompare(threed, threec), 0);
     });
 
-    test("Nine is higher than Three", function () {
+    test("Nine is higher than Three", function() {
         var nine = new Card(Rank.NINE, Suit.DIAMONDS);
         var three = new Card(Rank.THREE, Suit.CLUBS);
 
         equal(shCompare(nine, three), 1);
     });
 
-    test("Special higher than not special", function () {
+    test("Special higher than not special", function() {
         var two = new Card(Rank.TWO, Suit.DIAMONDS);
         var six = new Card(Rank.SIX, Suit.CLUBS);
 
         equal(shCompare(two, six), 1);
+    });
+
+    test("All ranks equal", function() {
+        var nineh = new Card(Rank.NINE, Suit.HEARTS);
+        var nines = new Card(Rank.NINE, Suit.SPADES);
+        var nined = new Card(Rank.NINE, Suit.DIAMONDS);
+        var ninec = new Card(Rank.NINE, Suit.CLUBS);
+    
+        var cards = [nineh, nines, nined, ninec];
+
+        ok(allRanksEqual(cards));
     });
 
 module("Player");
