@@ -2,15 +2,15 @@ function Game(numcards, players) {
     this.numplayers = players.length;
     this.numcards = numcards;
     this.players = players;
-    this.deck = new Array();
-    this.pile = new Array();
+    this.deck = [];
+    this.pile = [];
     this.burnt = 0;
     this.currentplayer = 0;
     this.lastmove = "";
 
     var cardsNeeded = numcards * players.length * 3;
         
-    var singleDeck = new Array();
+    var singleDeck = [];
     for (rank = 2; rank < 15; rank++) {
         for (suit = 1; suit < 5; suit++) {
             singleDeck.push(new Card(rank, suit));
@@ -61,7 +61,7 @@ function Game(numcards, players) {
     };
 
     this.firstMove = function() {
-        var toLay = new Array();
+        var toLay = [];
 
         this.currentplayer = 0;
         var currentLowest = this.players[this.currentplayer].hand[0];
@@ -142,7 +142,7 @@ function Game(numcards, players) {
         if (this.pile[this.pile.length - 1].isBurnCard()) {
             return true;
         } else if (this.pile.length > 3) {
-            var lastFour = new Array();
+            var lastFour = [];
             lastFour.push(this.pile[this.pile.length - 1]);
             lastFour.push(this.pile[this.pile.length - 2]);
             lastFour.push(this.pile[this.pile.length - 3]);
@@ -158,7 +158,7 @@ function Game(numcards, players) {
     this.burnPile = function() {
         var player = this.players[this.currentplayer];
         this.burnt += this.pile.length;
-        this.pile = new Array();
+        this.pile = [];
 
         this.lastmove = player.name;
         this.lastmove += " burnt the pile.";
@@ -216,7 +216,7 @@ function Game(numcards, players) {
 
     this.validMove = function(choices) {
         var player = this.players[this.currentplayer];
-        var cards = new Array();
+        var cards = [];
 
         if (player.hasCardsInHand()) {
             for (i = 0; i < choices.length; i++) {

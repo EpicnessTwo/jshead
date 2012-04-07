@@ -80,11 +80,11 @@ function addplayer() {
 function createGame(form) {
     hide(divgameform);
     
-    var players = new Array(numplayers);
+    var players = [];
 
     for (i = 0; i < numplayers; i++) {
         var name = document.getElementById("frm_player" + (i + 1) + "name").value;
-        players[i] = new Player(name, form.numcards.value);
+        players.push(new Player(name, form.numcards.value));
     }
 
     game = new Game(form.numcards.value, players);
@@ -150,7 +150,7 @@ function tryMove() {
 
 function makeMove(form) {
     var choice = form.choice.value - 1;
-    var toLay = new Array();
+    var toLay = [];
 
     hide(divbadmove);
     toLay.push(choice);

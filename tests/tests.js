@@ -370,11 +370,7 @@ module("Game");
     test("Create game", function() {
         var player1 = new Player("James", 3);
         var player2 = new Player("Dave", 3);
-        var players = new Array(2);
-
-        players[0] = player1;
-        players[1] = player2;
-
+        var players = [player1, player2];
         var game = new Game(3, players);
         
         equal(game.numplayers, 2);
@@ -390,11 +386,7 @@ module("Game");
     test("New game starts at first player", function() {
         var player1 = new Player("James", 3);
         var player2 = new Player("Dave", 3);
-        var players = new Array(2);
-
-        players[0] = player1;
-        players[1] = player2;
-
+        var players = [player1, player2];
         var game = new Game(3, players);
         var current = game.getCurrentPlayer();
 
@@ -409,11 +401,7 @@ module("Game");
         var player2 = new Player("Dave", 3);
         var card2 = new Card(Rank.NINE, Suit.SPADES);
         player2.dealToHand(card2);
-        var players = new Array(2);
-
-        players[0] = player1;
-        players[1] = player2;
-
+        var players = [player1, player2];
         var game = new Game(3, players);
         game.nextPlayer();
         var current = game.getCurrentPlayer();
@@ -428,11 +416,7 @@ module("Game");
         var player2 = new Player("Dave", 3);
         var card2 = new Card(Rank.NINE, Suit.SPADES);
         player2.dealToHand(card2);
-        var players = new Array(2);
-
-        players[0] = player1;
-        players[1] = player2;
-
+        var players = [player1, player2];
         var game = new Game(3, players);
         game.nextPlayer();
         game.nextPlayer();
@@ -449,12 +433,7 @@ module("Game");
         var card2 = new Card(Rank.NINE, Suit.SPADES);
         player2.dealToHand(card2);
         var playerNoCards = new Player("NoCards", 3);
-        var players = new Array(3);
-
-        players[0] = player1;
-        players[1] = playerNoCards;
-        players[2] = player2;
-
+        var players = [player1, playerNoCards, player2];
         var game = new Game(3, players);
         game.nextPlayer();
         var current = game.getCurrentPlayer();
@@ -464,7 +443,7 @@ module("Game");
 
     test("Can lay three on nothing", function() {
         var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var cards = new Array();
+        var cards = [];
 
         ok(canLay(three, cards));
     });
