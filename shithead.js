@@ -1,180 +1,166 @@
-var numplayers = 1
-var maxplayers = 4
-var game;
+var SH = SH || {};
 
-var divmain;
-var divgameform;
-var divswap;
-var divdivs;
-var divtitle;
-var divpile;
-var divdeck;
-var divburnt;
-var divlastmove;
-var divplayers;
-var divswpplayer;
-var divmessage;
-var divmovechoice;
-var divpickup;
-var divbadmove;
+SH.numplayers = 1
+SH.maxplayers = 4
 
-function hide(adiv) {
+SH.hide = function (adiv) {
     adiv.style.display="none";
-    divdivs.appendChild(adiv);
-}
+    SH.divdivs.appendChild(adiv);
+};
 
-function appendToMain(adiv) {
-    divmain.appendChild(adiv);
+SH.appendToMain = function (adiv) {
+    SH.divmain.appendChild(adiv);
     adiv.style.display="inline"; 
-}
+};
 
-function init() {
-    divmain = document.getElementById("main");
-    divgameform = document.getElementById("gameform");
-    divswap = document.getElementById("swap");
-    divdivs = document.getElementById("divs");
-    divtitle = document.getElementById("title");
-    divpile = document.getElementById("pile");
-    divdeck = document.getElementById("deck");
-    divburnt = document.getElementById("burnt");
-    divlastmove = document.getElementById("lastmove");
-    divplayers = document.getElementById("players");
-    divswpplayer = document.getElementById("swp_player");
-    divmessage = document.getElementById("message");
-    divmovechoice = document.getElementById("movechoice");
-    divpickup = document.getElementById("pickup");
-    divbadmove = document.getElementById("badmove");
+SH.init = function () {
+    SH.divmain = document.getElementById("main");
+    SH.divgameform = document.getElementById("gameform");
+    SH.divswap = document.getElementById("swap");
+    SH.divdivs = document.getElementById("divs");
+    SH.divtitle = document.getElementById("title");
+    SH.divpile = document.getElementById("pile");
+    SH.divdeck = document.getElementById("deck");
+    SH.divburnt = document.getElementById("burnt");
+    SH.divlastmove = document.getElementById("lastmove");
+    SH.divplayers = document.getElementById("players");
+    SH.divswpplayer = document.getElementById("swp_player");
+    SH.divmessage = document.getElementById("message");
+    SH.divmovechoice = document.getElementById("movechoice");
+    SH.divpickup = document.getElementById("pickup");
+    SH.divbadmove = document.getElementById("badmove");
 
-    divdivs.style.display="none";   
-    divswap.style.display="none";
-    divtitle.style.display="none";
-    divpile.style.display="none";
-    divdeck.style.display="none";
-    divburnt.style.display="none";
-    divlastmove.style.display="none";
-    divplayers.style.display="none";
-    divswpplayer.style.display="none";
-    divmessage.style.display="none";
-    divmovechoice.style.display="none";
-    divpickup.style.display="none";
-    divbadmove.style.display="none";
+    SH.divdivs.style.display="none";   
+    SH.divswap.style.display="none";
+    SH.divtitle.style.display="none";
+    SH.divpile.style.display="none";
+    SH.divdeck.style.display="none";
+    SH.divburnt.style.display="none";
+    SH.divlastmove.style.display="none";
+    SH.divplayers.style.display="none";
+    SH.divswpplayer.style.display="none";
+    SH.divmessage.style.display="none";
+    SH.divmovechoice.style.display="none";
+    SH.divpickup.style.display="none";
+    SH.divbadmove.style.display="none";
 
-    appendToMain(divgameform);    
-}
+    SH.appendToMain(SH.divgameform);    
+};
 
-function addplayer() {
-    if (numplayers == maxplayers) {
-        alert("Upto " + maxplayers + " players are allowed");
+SH.addplayer = function () {
+    if (SH.numplayers == SH.maxplayers) {
+        alert("Upto " + SH.maxplayers + " players are allowed");
     } else {
         var newdiv = document.createElement('div');
-        newdiv.id = "frm_player" + (numplayers + 1);
-        newdiv.innerHTML = "Player " + (numplayers + 1) + 
+        newdiv.id = "frm_player" + (SH.numplayers + 1);
+        newdiv.innerHTML = "Player " + (SH.numplayers + 1) + 
             " name: <input type='text' " + 
-            "id='frm_player" + (numplayers + 1) + "name' " + 
-            "name='frm_player" + (numplayers + 1) + "name'>";
+            "id='frm_player" + (SH.numplayers + 1) + "name' " + 
+            "name='frm_player" + (SH.numplayers + 1) + "name'>";
         document.getElementById("frm_players").appendChild(newdiv);
-        numplayers++;
+        SH.numplayers++;
     }
-}
+};
 
-function createGame(form) {
-    hide(divgameform);
+SH.createGame = function (form) {
+    SH.hide(SH.divgameform);
     
     var players = [];
 
-    for (i = 0; i < numplayers; i++) {
+    for (i = 0; i < SH.numplayers; i++) {
         var name = document.getElementById("frm_player" + (i + 1) + "name").value;
         players.push(new Player(name, form.numcards.value));
     }
 
-    game = new Game(form.numcards.value, players);
-    game.deal();
+    SH.game = new Game(form.numcards.value, players);
+    SH.game.deal();
     
-    appendToMain(divtitle);
+    SH.appendToMain(SH.divtitle);
 
-    updateGame();
-    appendToMain(divpile);
-    appendToMain(divdeck);
-    appendToMain(divburnt);
-    appendToMain(divlastmove);
+    SH.updateGame();
+    SH.appendToMain(SH.divpile);
+    SH.appendToMain(SH.divdeck);
+    SH.appendToMain(SH.divburnt);
+    SH.appendToMain(SH.divlastmove);
 
-    var player = game.getCurrentPlayer();
-    updatePlayerSwap(player);
-    appendToMain(divswpplayer);
-    appendToMain(divswap); 
-}
+    var player = SH.game.getCurrentPlayer();
+    SH.updatePlayerSwap(player);
+    SH.appendToMain(SH.divswpplayer);
+    SH.appendToMain(SH.divswap); 
+};
 
-function swapCards(form) {
-    var player = game.getCurrentPlayer();
+SH.swapCards = function (form) {
+    var player = SH.game.getCurrentPlayer();
     var handcard = form.handcard.value - 1;
     var faceupcard = form.faceupcard.value -1;
 
     player.swapCards(handcard, faceupcard);
     player.sortHand();
    
-    updatePlayerSwap();
+    SH.updatePlayerSwap();
  
     form.handcard.value = "";
     form.faceupcard.value = ""; 
-}
+};
 
-function swapDone() {
-    game.nextPlayer();
-    if (!game.isAtFirstPlayer()) {
-        updatePlayerSwap();
+SH.swapDone = function () {
+    SH.game.nextPlayer();
+    if (!SH.game.isAtFirstPlayer()) {
+        SH.updatePlayerSwap();
     } else {
-        hide(divswpplayer);
-        hide(divswap);
-        game.firstMove();
-        updateGame();
-        updatePlayers();
-        appendToMain(divplayers);
+        SH.hide(SH.divswpplayer);
+        SH.hide(SH.divswap);
+        SH.game.firstMove();
+        SH.updateGame();
+        SH.updatePlayers();
+        SH.appendToMain(SH.divplayers);
 
-        tryMove();
+        SH.tryMove();
     }
-}
+};
 
-function tryMove() {
-    if (game.currentPlayerCanLay()) {
-        showMoveMessage();
-        appendToMain(divmessage);
-        hide(divpickup);
-        appendToMain(divmovechoice);
+SH.tryMove = function () {
+    if (SH.game.currentPlayerCanLay()) {
+        SH.showMoveMessage();
+        SH.appendToMain(SH.divmessage);
+        SH.hide(SH.divpickup);
+        SH.appendToMain(SH.divmovechoice);
     } else {
-        showPickupMessage();
-        appendToMain(divmessage);
-        hide(divmovechoice);
-        appendToMain(divpickup);
+        SH.showPickupMessage();
+        SH.appendToMain(SH.divmessage);
+        SH.hide(SH.divmovechoice);
+        SH.appendToMain(SH.divpickup);
     }
-}
+};
 
-function makeMove(form) {
+SH.makeMove = function (form) {
     var choice = form.choice.value - 1;
     var toLay = [];
 
-    hide(divbadmove);
+    SH.hide(SH.divbadmove);
     toLay.push(choice);
-    if (game.validMove(toLay)) {
-        game.makeMove(toLay);
+    if (SH.game.validMove(toLay)) {
+        SH.game.makeMove(toLay);
         form.choice.value = "";
-        updateGame();
-        updatePlayers();
+        SH.updateGame();
+        SH.updatePlayers();
     } else {
-        appendToMain(divbadmove);
+        SH.appendToMain(SH.divbadmove);
         form.choice.value = "";
     }
-    tryMove();
-}
+   
+    SH.tryMove();
+};
 
-function pickup() {
-    game.pickup();
-    hide(divpickup);
-    updateGame();
-    updatePlayers();
-    tryMove();
-}
+SH.pickup = function () {
+    SH.game.pickup();
+    SH.hide(SH.divpickup);
+    SH.updateGame();
+    SH.updatePlayers();
+    SH.tryMove();
+};
 
-function showCards(cards, name, hide) {
+SH.showCards = function (cards, name, hide) {
     var content = name + ":<br>";
     for (c = 0; c < cards.length; c++) {
         content += "(" + (c+1) + ")";
@@ -189,25 +175,25 @@ function showCards(cards, name, hide) {
     }
 
     return content;
-}
+};
 
-function updateGame() {
+SH.updateGame = function () {
     var pilecards = "";
-    for (i = game.pile.length - 1; i >= 0; i--) {
-        pilecards += game.pile[i].toString();
+    for (i = SH.game.pile.length - 1; i >= 0; i--) {
+        pilecards += SH.game.pile[i].toString();
         pilecards += "<br>";
     }
     
-    divpile.innerHTML = game.pile.length + " on pile:<br>" + pilecards;    
-    divdeck.innerHTML = game.deck.length + " left on deck<br>";
-    divburnt.innerHTML = game.burnt + " burnt<br>";
-    divlastmove.innerHTML = game.lastmove + "<br>";
-}
+    SH.divpile.innerHTML = SH.game.pile.length + " on pile:<br>" + pilecards;    
+    SH.divdeck.innerHTML = SH.game.deck.length + " left on deck<br>";
+    SH.divburnt.innerHTML = SH.game.burnt + " burnt<br>";
+    SH.divlastmove.innerHTML = SH.game.lastmove + "<br>";
+};
 
-function showMoveMessage() {
-    var player = game.getCurrentPlayer();
+SH.showMoveMessage = function () {
+    var player = SH.game.getCurrentPlayer();
     var divcontent = player.name;
-    divmessage.innerHTML = player.name;
+    SH.divmessage.innerHTML = player.name;
     
     if (player.hasCardsInHand()) {
         divcontent += ", choose cards from hand:<br>";
@@ -217,38 +203,38 @@ function showMoveMessage() {
         divcontent += ", choose a card from down:<br>";
     }
 
-    divmessage.innerHTML = divcontent;
-}
+    SH.divmessage.innerHTML = divcontent;
+};
 
-function showPickupMessage() {
-    var player = game.getCurrentPlayer();
-    divmessage.innerHTML = "OH NO! " + player.name + ", you must pickup.";
-}
+SH.showPickupMessage = function () {
+    var player = SH.game.getCurrentPlayer();
+    SH.divmessage.innerHTML = "OH NO! " + player.name + ", you must pickup.";
+};
 
-function updatePlayerSwap() {
-    var player = game.getCurrentPlayer();
+SH.updatePlayerSwap = function () {
+    var player = SH.game.getCurrentPlayer();
 
-    divswpplayer.innerHTML = 
+    SH.divswpplayer.innerHTML = 
         player.name + "<br>" + 
-        showCards(player.hand, "Hand", false) + "<br>" + 
-        showCards(player.faceup, "Face up", false) + "<br>";
-}
+        SH.showCards(player.hand, "Hand", false) + "<br>" + 
+        SH.showCards(player.faceup, "Face up", false) + "<br>";
+};
 
-function updatePlayers() {
+SH.updatePlayers = function () {
     var divcontent = "";
     var player;
 
-    for (i = 0; i < game.players.length; i++) {
-        player = game.players[i];
+    for (i = 0; i < SH.game.players.length; i++) {
+        player = SH.game.players[i];
         divcontent += player.name + "<br>";
-        divcontent += showCards(player.hand, "Hand", false);
+        divcontent += SH.showCards(player.hand, "Hand", false);
         divcontent += "<br>";
-        divcontent += showCards(player.faceup, "Face up", false);        
+        divcontent += SH.showCards(player.faceup, "Face up", false);        
         divcontent += "<br>";
-        divcontent += showCards(player.facedown, "Face down", true);
+        divcontent += SH.showCards(player.facedown, "Face down", true);
         divcontent += "<br>";
     }
 
-    divplayers.innerHTML = divcontent;
-}
+    SH.divplayers.innerHTML = divcontent;
+};
 
