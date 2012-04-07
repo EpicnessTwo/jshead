@@ -41,9 +41,9 @@ SH.card.suitstr = function (suit) {
 };
 
 SH.card.rankCompare = function (c1, c2) {
-    if (c1.rank < c2.rank) {
+    if (c1.getRank() < c2.getRank()) {
         return -1;
-    } else if (c1.rank == c2.rank) {
+    } else if (c1.getRank() == c2.getRank()) {
         return 0;
     } else {
         return 1;
@@ -74,27 +74,35 @@ SH.card.allRanksEqual = function (cards) {
     return true;
 };
 
-SH.card.Card = function (rank, suit) {
-    this.rank = rank;
-    this.suit = suit;
+SH.card.card = function (rank, suit) {
+    return {
+        getRank: function () {
+            return rank;
+        },
 
-    this.toString = function() {
-        return SH.card.rankstr(this.rank) + " of " + SH.card.suitstr(this.suit);
-    };
+        getSuit: function () {
+            return suit;
+        },
 
-    this.isSpecial = function() {
-        return (this.rank == 2 || this.rank == 7 || this.rank == 10);
-    };
+        toString: function () {
+            return SH.card.rankstr(rank) + 
+                " of " + SH.card.suitstr(suit);
+        },
 
-    this.isInvisible = function() {
-        return (this.rank == 7);
-    };
+        isSpecial: function () {
+            return (rank == 2 || rank == 7 || rank == 10);
+        },
 
-    this.isBurnCard = function() {
-        return (this.rank == 10);
-    };
+        isInvisible: function () {
+            return (rank == 7);
+        },
 
-    this.isMissAGoCard = function() {
-        return (this.rank == 8);
+        isBurnCard: function () {
+            return (rank == 10);
+        },
+
+        isMissAGoCard: function () {
+            return (rank == 8);
+        }
     };
 };

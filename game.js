@@ -11,7 +11,7 @@ SH.game.canLay = function (card, cards) {
         var newCards = cards.slice(0);
         newCards.pop();
         return SH.game.canLay(card, newCards);
-    } else if (card.rank < cards[cards.length -1].rank) {
+    } else if (card.getRank() < cards[cards.length -1].getRank()) {
         return false;
     } else {
         return true;
@@ -33,7 +33,7 @@ SH.game.Game = function (numcards, players) {
     var singleDeck = [];
     for (rank = 2; rank < 15; rank++) {
         for (suit = 1; suit < 5; suit++) {
-            singleDeck.push(new SH.card.Card(rank, suit));
+            singleDeck.push(SH.card.card(rank, suit));
         }
     }
         
