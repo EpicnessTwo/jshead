@@ -13,7 +13,7 @@ function Game(numcards, players) {
     var singleDeck = [];
     for (rank = 2; rank < 15; rank++) {
         for (suit = 1; suit < 5; suit++) {
-            singleDeck.push(new Card(rank, suit));
+            singleDeck.push(new SH.card.Card(rank, suit));
         }
     }
         
@@ -67,7 +67,7 @@ function Game(numcards, players) {
         var currentLowest = this.players[this.currentplayer].hand[0];
         for (i = 0; i < this.numplayers ; i++) {
             var playersLowest = this.players[i].hand[0];
-            if (shCompare(playersLowest, currentLowest) == -1) {
+            if (SH.card.shCompare(playersLowest, currentLowest) == -1) {
                 this.currentplayer = i;
             }
         }
@@ -76,7 +76,7 @@ function Game(numcards, players) {
         var first = player.hand[0];
         for (i = 0; i < this.numcards; i++) {
             var current = this.players[this.currentplayer].hand[i];
-            if (rankCompare(current, first) == 0) {
+            if (SH.card.rankCompare(current, first) == 0) {
                 toLay.push(i);
             }
         }
@@ -148,7 +148,7 @@ function Game(numcards, players) {
             lastFour.push(this.pile[this.pile.length - 3]);
             lastFour.push(this.pile[this.pile.length - 4]);
     
-            if (allRanksEqual(lastFour)) {
+            if (SH.card.allRanksEqual(lastFour)) {
                 return true;
             }
         }
@@ -239,7 +239,7 @@ function Game(numcards, players) {
     };
 
     this.validMoveWithCards = function(cards) {
-        if (!allRanksEqual(cards)) {
+        if (!SH.card.allRanksEqual(cards)) {
             return false;
         } else {
             return canLay(cards[0], this.pile);

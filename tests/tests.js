@@ -3,102 +3,102 @@ $(document).ready(function(){
 module("Card");
 
     test("Create card", function() {
-        var card = new Card(Rank.TWO, Suit.HEARTS);
+        var card = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.HEARTS);
         var cardStr = card.toString();
 
         equal(cardStr, "TWO of HEARTS");
     });
 
     test("Two is special", function() {
-        var card = new Card(Rank.TWO, Suit.DIAMONDS);
+        var card = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.DIAMONDS);
 
         ok(card.isSpecial());
     });
 
     test("Seven is special", function() {
-        var card = new Card(Rank.SEVEN, Suit.CLUBS);
+        var card = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.CLUBS);
 
         ok(card.isSpecial());
     });
 
     test("Ten is special", function() {
-        var card = new Card(Rank.TEN, Suit.SPADES);
+        var card = new SH.card.Card(SH.card.Rank.TEN, SH.card.Suit.SPADES);
 
         ok(card.isSpecial());
     });
 
     test("Seven is invisible", function() {
-        var card = new Card(Rank.SEVEN, Suit.HEARTS);
+        var card = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.HEARTS);
         
         ok(card.isInvisible());
     });
     
     test("Three is less than nine", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var nine = new Card(Rank.NINE, Suit.SPADES);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var nine = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.SPADES);
 
-        equal(shCompare(three, nine), -1);
+        equal(SH.card.shCompare(three, nine), -1);
     });
 
     test("Three is less than Four", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var four = new Card(Rank.FOUR, Suit.HEARTS);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var four = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.HEARTS);
 
-        equal(shCompare(three, four), -1);
+        equal(SH.card.shCompare(three, four), -1);
     });
         
     test("Three is same as Three", function() {
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
-        var threec = new Card(Rank.THREE, Suit.CLUBS);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var threec = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.CLUBS);
 
-        equal(shCompare(threed, threec), 0);
+        equal(SH.card.shCompare(threed, threec), 0);
     });
 
     test("Nine is higher than Three", function() {
-        var nine = new Card(Rank.NINE, Suit.DIAMONDS);
-        var three = new Card(Rank.THREE, Suit.CLUBS);
+        var nine = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.DIAMONDS);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.CLUBS);
 
-        equal(shCompare(nine, three), 1);
+        equal(SH.card.shCompare(nine, three), 1);
     });
 
     test("Special higher than not special", function() {
-        var two = new Card(Rank.TWO, Suit.DIAMONDS);
-        var six = new Card(Rank.SIX, Suit.CLUBS);
+        var two = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.DIAMONDS);
+        var six = new SH.card.Card(SH.card.Rank.SIX, SH.card.Suit.CLUBS);
 
-        equal(shCompare(two, six), 1);
+        equal(SH.card.shCompare(two, six), 1);
     });
 
     test("All ranks equal", function() {
-        var nineh = new Card(Rank.NINE, Suit.HEARTS);
-        var nines = new Card(Rank.NINE, Suit.SPADES);
-        var nined = new Card(Rank.NINE, Suit.DIAMONDS);
-        var ninec = new Card(Rank.NINE, Suit.CLUBS);
+        var nineh = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.HEARTS);
+        var nines = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.SPADES);
+        var nined = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.DIAMONDS);
+        var ninec = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.CLUBS);
     
         var cards = [nineh, nines, nined, ninec];
 
-        ok(allRanksEqual(cards));
+        ok(SH.card.allRanksEqual(cards));
     });
 
     test("Is burn card", function() {
-        var ten = new Card(Rank.TEN, Suit.CLUBS);
+        var ten = new SH.card.Card(SH.card.Rank.TEN, SH.card.Suit.CLUBS);
         
         ok(ten.isBurnCard());
     });
 
     test("Is miss a go card", function() {
-        var eight = new Card(Rank.EIGHT, Suit.CLUBS);
+        var eight = new SH.card.Card(SH.card.Rank.EIGHT, SH.card.Suit.CLUBS);
         
         ok(eight.isMissAGoCard());
     });
 
     test("Three is not burn card", function() {
-        var three = new Card(Rank.THREE, Suit.CLUBS);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.CLUBS);
         
         ok(!three.isBurnCard());
     });
 
     test("Nine is not miss a go card", function() {
-        var nine = new Card(Rank.NINE, Suit.CLUBS);
+        var nine = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.CLUBS);
         
         ok(!nine.isMissAGoCard());
     });
@@ -117,7 +117,7 @@ module("Player");
 
     test("Deal card to hand", function() {
         var player = new Player("James", 3);
-        var card = new Card(Rank.FIVE, Suit.SPADES);
+        var card = new SH.card.Card(SH.card.Rank.FIVE, SH.card.Suit.SPADES);
         player.dealToHand(card);
         
         equal(player.hand[0], card);
@@ -125,8 +125,8 @@ module("Player");
 
     test("Deal two cards to hand", function() {
         var player = new Player("James", 3);
-        var card1 = new Card(Rank.FIVE, Suit.SPADES);
-        var card2 = new Card(Rank.ACE, Suit.DIAMONDS);
+        var card1 = new SH.card.Card(SH.card.Rank.FIVE, SH.card.Suit.SPADES);
+        var card2 = new SH.card.Card(SH.card.Rank.ACE, SH.card.Suit.DIAMONDS);
         player.dealToHand(card1);
         player.dealToHand(card2);
         
@@ -136,7 +136,7 @@ module("Player");
     
     test("Deal card to faceup", function() {
         var player = new Player("James", 3);
-        var card = new Card(Rank.SEVEN, Suit.SPADES);
+        var card = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
         player.dealToFaceUp(card);
         
         equal(player.faceup[0], card);
@@ -144,7 +144,7 @@ module("Player");
 
     test("Deal card to facedown", function() {
         var player = new Player("James", 3);
-        var card = new Card(Rank.JACK, Suit.HEARTS);
+        var card = new SH.card.Card(SH.card.Rank.JACK, SH.card.Suit.HEARTS);
         player.dealToFaceDown(card);
         
         equal(player.facedown[0], card);
@@ -153,12 +153,12 @@ module("Player");
     test("Swap first and first", function() {
         var player = new Player("James", 3);
 
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
-        var sevens = new Card(Rank.SEVEN, Suit.SPADES);
-        var aced = new Card(Rank.ACE, Suit.DIAMONDS);
-        var twoh = new Card(Rank.TWO, Suit.HEARTS);
-        var jackc = new Card(Rank.JACK, Suit.CLUBS);
-        var eights = new Card(Rank.EIGHT, Suit.SPADES);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var sevens = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
+        var aced = new SH.card.Card(SH.card.Rank.ACE, SH.card.Suit.DIAMONDS);
+        var twoh = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.HEARTS);
+        var jackc = new SH.card.Card(SH.card.Rank.JACK, SH.card.Suit.CLUBS);
+        var eights = new SH.card.Card(SH.card.Rank.EIGHT, SH.card.Suit.SPADES);
         
         player.dealToHand(threed);
         player.dealToHand(sevens);
@@ -176,12 +176,12 @@ module("Player");
     test("Swap first and second", function() {
         var player = new Player("James", 3);
 
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
-        var sevens = new Card(Rank.SEVEN, Suit.SPADES);
-        var aced = new Card(Rank.ACE, Suit.DIAMONDS);
-        var twoh = new Card(Rank.TWO, Suit.HEARTS);
-        var jackc = new Card(Rank.JACK, Suit.CLUBS);
-        var eights = new Card(Rank.EIGHT, Suit.SPADES);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var sevens = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
+        var aced = new SH.card.Card(SH.card.Rank.ACE, SH.card.Suit.DIAMONDS);
+        var twoh = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.HEARTS);
+        var jackc = new SH.card.Card(SH.card.Rank.JACK, SH.card.Suit.CLUBS);
+        var eights = new SH.card.Card(SH.card.Rank.EIGHT, SH.card.Suit.SPADES);
         
         player.dealToHand(threed);
         player.dealToHand(sevens);
@@ -199,12 +199,12 @@ module("Player");
     test("Swap first and third", function() {
         var player = new Player("James", 3);
 
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
-        var sevens = new Card(Rank.SEVEN, Suit.SPADES);
-        var aced = new Card(Rank.ACE, Suit.DIAMONDS);
-        var twoh = new Card(Rank.TWO, Suit.HEARTS);
-        var jackc = new Card(Rank.JACK, Suit.CLUBS);
-        var eights = new Card(Rank.EIGHT, Suit.SPADES);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var sevens = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
+        var aced = new SH.card.Card(SH.card.Rank.ACE, SH.card.Suit.DIAMONDS);
+        var twoh = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.HEARTS);
+        var jackc = new SH.card.Card(SH.card.Rank.JACK, SH.card.Suit.CLUBS);
+        var eights = new SH.card.Card(SH.card.Rank.EIGHT, SH.card.Suit.SPADES);
         
         player.dealToHand(threed);
         player.dealToHand(sevens);
@@ -222,11 +222,11 @@ module("Player");
     test("Sort hand", function() {
         var player = new Player("James", 5);
 
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
-        var fourd = new Card(Rank.FOUR, Suit.DIAMONDS);
-        var jacks = new Card(Rank.JACK, Suit.SPADES);
-        var eighth = new Card(Rank.EIGHT, Suit.HEARTS);
-        var twoc = new Card(Rank.TWO, Suit.CLUBS);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var fourd = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.DIAMONDS);
+        var jacks = new SH.card.Card(SH.card.Rank.JACK, SH.card.Suit.SPADES);
+        var eighth = new SH.card.Card(SH.card.Rank.EIGHT, SH.card.Suit.HEARTS);
+        var twoc = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.CLUBS);
 
         player.dealToHand(twoc);
         player.dealToHand(eighth);
@@ -246,11 +246,11 @@ module("Player");
     test("Remove one card from hand", function() {
         var player = new Player("James", 3);
 
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
-        var fourd = new Card(Rank.FOUR, Suit.DIAMONDS);
-        var jacks = new Card(Rank.JACK, Suit.SPADES);
-        var eighth = new Card(Rank.EIGHT, Suit.HEARTS);
-        var twoc = new Card(Rank.TWO, Suit.CLUBS);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var fourd = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.DIAMONDS);
+        var jacks = new SH.card.Card(SH.card.Rank.JACK, SH.card.Suit.SPADES);
+        var eighth = new SH.card.Card(SH.card.Rank.EIGHT, SH.card.Suit.HEARTS);
+        var twoc = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.CLUBS);
 
         player.dealToHand(twoc);
         player.dealToHand(eighth);
@@ -273,11 +273,11 @@ module("Player");
     test("Remove two cards from hand", function() {
         var player = new Player("James", 3);
 
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
-        var fourd = new Card(Rank.FOUR, Suit.DIAMONDS);
-        var jacks = new Card(Rank.JACK, Suit.SPADES);
-        var eighth = new Card(Rank.EIGHT, Suit.HEARTS);
-        var twoc = new Card(Rank.TWO, Suit.CLUBS);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var fourd = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.DIAMONDS);
+        var jacks = new SH.card.Card(SH.card.Rank.JACK, SH.card.Suit.SPADES);
+        var eighth = new SH.card.Card(SH.card.Rank.EIGHT, SH.card.Suit.HEARTS);
+        var twoc = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.CLUBS);
 
         player.dealToHand(twoc);
         player.dealToHand(eighth);
@@ -299,7 +299,7 @@ module("Player");
 
     test("Has cards in hand", function() {
         var player = new Player("James", 3);
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
         player.dealToHand(threed);
 
         ok(player.hasCardsInHand());
@@ -313,7 +313,7 @@ module("Player");
 
     test("Has cards in faceup", function() {
         var player = new Player("James", 3);
-        var threed = new Card(Rank.THREE, Suit.DIAMONDS);
+        var threed = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
         player.dealToFaceUp(threed);
 
         ok(player.hasCardsInFaceUp());
@@ -328,8 +328,8 @@ module("Player");
     test("Has cards when has hand", function() {
         var player = new Player("James", 3);
         
-        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
-        var card2 = new Card(Rank.TWO, Suit.HEARTS);
+        var card1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var card2 = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.HEARTS);
         
         player.dealToHand(card1);
         player.dealToHand(card2);
@@ -339,8 +339,8 @@ module("Player");
 
     test("Has cards when has faceup", function() {
         var player = new Player("James", 3);
-        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
-        var card2 = new Card(Rank.TWO, Suit.HEARTS);
+        var card1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var card2 = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.HEARTS);
         
         player.dealToFaceUp(card1);
         player.dealToFaceUp(card2);
@@ -350,8 +350,8 @@ module("Player");
     
     test("Has cards when has facedown", function() {
         var player = new Player("James", 3);
-        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
-        var card2 = new Card(Rank.TWO, Suit.HEARTS);
+        var card1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var card2 = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.HEARTS);
         
         player.dealToFaceDown(card1);
         player.dealToFaceDown(card2);
@@ -396,10 +396,10 @@ module("Game");
 
     test("Next player moves to next player", function() {
         var player1 = new Player("James", 3);
-        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var card1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
         player1.dealToHand(card1);
         var player2 = new Player("Dave", 3);
-        var card2 = new Card(Rank.NINE, Suit.SPADES);
+        var card2 = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.SPADES);
         player2.dealToHand(card2);
         var players = [player1, player2];
         var game = new Game(3, players);
@@ -411,10 +411,10 @@ module("Game");
         
     test("Next player rolls", function() {
         var player1 = new Player("James", 3);
-        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var card1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
         player1.dealToHand(card1);
         var player2 = new Player("Dave", 3);
-        var card2 = new Card(Rank.NINE, Suit.SPADES);
+        var card2 = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.SPADES);
         player2.dealToHand(card2);
         var players = [player1, player2];
         var game = new Game(3, players);
@@ -427,10 +427,10 @@ module("Game");
 
     test("Next player skips when no cards", function() {
         var player1 = new Player("James", 3);
-        var card1 = new Card(Rank.THREE, Suit.DIAMONDS);
+        var card1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
         player1.dealToHand(card1);
         var player2 = new Player("Dave", 3);
-        var card2 = new Card(Rank.NINE, Suit.SPADES);
+        var card2 = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.SPADES);
         player2.dealToHand(card2);
         var playerNoCards = new Player("NoCards", 3);
         var players = [player1, playerNoCards, player2];
@@ -442,100 +442,100 @@ module("Game");
     });
 
     test("Can lay three on nothing", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
         var cards = [];
 
         ok(canLay(three, cards));
     });
 
     test("Can lay three on three", function() {
-        var three1 = new Card(Rank.THREE, Suit.DIAMONDS);
-        var three2 = new Card(Rank.THREE, Suit.SPADES);
+        var three1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var three2 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.SPADES);
         var cards = [three2];
 
         ok(canLay(three1, cards));
     });
 
     test("Can lay three on two", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var two = new Card(Rank.TWO, Suit.SPADES);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var two = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.SPADES);
         var cards = [two];
 
         ok(canLay(three, cards));
     });
 
     test("Can lay three on invisible on nothing", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var seven = new Card(Rank.SEVEN, Suit.SPADES);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var seven = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
         var cards = [seven];
 
         ok(canLay(three, cards));
     });
     
     test("Can lay three on invisible on three", function() {
-        var three1 = new Card(Rank.THREE, Suit.DIAMONDS);
-        var seven = new Card(Rank.SEVEN, Suit.SPADES);
-        var three2 = new Card(Rank.THREE, Suit.SPADES);
+        var three1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var seven = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
+        var three2 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.SPADES);
         var cards = [three2, seven];
 
         ok(canLay(three1, cards));
     });
 
     test("Cannot lay three on invisible on four", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var seven = new Card(Rank.SEVEN, Suit.HEARTS);
-        var four = new Card(Rank.FOUR, Suit.SPADES);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var seven = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.HEARTS);
+        var four = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.SPADES);
         var cards = [four, seven];
 
         ok(!canLay(three, cards));
     });
 
     test("Can lay three on two invisibles on three", function() {
-        var three1 = new Card(Rank.THREE, Suit.DIAMONDS);
-        var seven1 = new Card(Rank.SEVEN, Suit.HEARTS);
-        var seven2 = new Card(Rank.SEVEN, Suit.SPADES);
-        var three2 = new Card(Rank.THREE, Suit.SPADES);
+        var three1 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var seven1 = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.HEARTS);
+        var seven2 = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
+        var three2 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.SPADES);
         var cards = [three2, seven2, seven1, three1];
 
         ok(canLay(three1, cards));
     });
 
     test("Cannot lay three on four", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var four = new Card(Rank.FOUR, Suit.SPADES);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var four = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.SPADES);
         var cards = [four];
 
         ok(!canLay(three, cards));
     });
     
     test("Cannot lay three on invisible on four", function() {
-        var three = new Card(Rank.THREE, Suit.DIAMONDS);
-        var seven = new Card(Rank.SEVEN, Suit.HEARTS);
-        var four = new Card(Rank.FOUR, Suit.SPADES);
+        var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
+        var seven = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.HEARTS);
+        var four = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.SPADES);
         var cards = [four, seven];
 
         ok(!canLay(three, cards));
     });
 
     test("Can lay two on nine", function() {
-        var two = new Card(Rank.TWO, Suit.DIAMONDS);
-        var nine = new Card(Rank.NINE, Suit.HEARTS);
+        var two = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.DIAMONDS);
+        var nine = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.HEARTS);
         var cards = [nine];
 
         ok(canLay(two, cards));
     });
 
     test("Can lay seven on nine", function() {
-        var seven = new Card(Rank.SEVEN, Suit.DIAMONDS);
-        var nine = new Card(Rank.NINE, Suit.HEARTS);
+        var seven = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.DIAMONDS);
+        var nine = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.HEARTS);
         var cards = [nine];
 
         ok(canLay(seven, cards));
     });
     
     test("Can lay ten on ace", function() {
-        var ten = new Card(Rank.TEN, Suit.DIAMONDS);
-        var ace = new Card(Rank.ACE, Suit.HEARTS);
+        var ten = new SH.card.Card(SH.card.Rank.TEN, SH.card.Suit.DIAMONDS);
+        var ace = new SH.card.Card(SH.card.Rank.ACE, SH.card.Suit.HEARTS);
         var cards = [ace];
 
         ok(canLay(ten, cards));
