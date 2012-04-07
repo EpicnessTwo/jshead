@@ -371,7 +371,7 @@ module("Game");
         var player1 = new SH.player.Player("James", 3);
         var player2 = new SH.player.Player("Dave", 3);
         var players = [player1, player2];
-        var game = new Game(3, players);
+        var game = new SH.game.Game(3, players);
         
         equal(game.numplayers, 2);
         equal(game.numcards, 3);
@@ -387,7 +387,7 @@ module("Game");
         var player1 = new SH.player.Player("James", 3);
         var player2 = new SH.player.Player("Dave", 3);
         var players = [player1, player2];
-        var game = new Game(3, players);
+        var game = new SH.game.Game(3, players);
         var current = game.getCurrentPlayer();
 
         equal(current, player1);
@@ -402,7 +402,7 @@ module("Game");
         var card2 = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.SPADES);
         player2.dealToHand(card2);
         var players = [player1, player2];
-        var game = new Game(3, players);
+        var game = new SH.game.Game(3, players);
         game.nextPlayer();
         var current = game.getCurrentPlayer();
 
@@ -417,7 +417,7 @@ module("Game");
         var card2 = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.SPADES);
         player2.dealToHand(card2);
         var players = [player1, player2];
-        var game = new Game(3, players);
+        var game = new SH.game.Game(3, players);
         game.nextPlayer();
         game.nextPlayer();
         var current = game.getCurrentPlayer();
@@ -434,7 +434,7 @@ module("Game");
         player2.dealToHand(card2);
         var playerNoCards = new SH.player.Player("NoCards", 3);
         var players = [player1, playerNoCards, player2];
-        var game = new Game(3, players);
+        var game = new SH.game.Game(3, players);
         game.nextPlayer();
         var current = game.getCurrentPlayer();
 
@@ -445,7 +445,7 @@ module("Game");
         var three = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.DIAMONDS);
         var cards = [];
 
-        ok(canLay(three, cards));
+        ok(SH.game.canLay(three, cards));
     });
 
     test("Can lay three on three", function() {
@@ -453,7 +453,7 @@ module("Game");
         var three2 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.SPADES);
         var cards = [three2];
 
-        ok(canLay(three1, cards));
+        ok(SH.game.canLay(three1, cards));
     });
 
     test("Can lay three on two", function() {
@@ -461,7 +461,7 @@ module("Game");
         var two = new SH.card.Card(SH.card.Rank.TWO, SH.card.Suit.SPADES);
         var cards = [two];
 
-        ok(canLay(three, cards));
+        ok(SH.game.canLay(three, cards));
     });
 
     test("Can lay three on invisible on nothing", function() {
@@ -469,7 +469,7 @@ module("Game");
         var seven = new SH.card.Card(SH.card.Rank.SEVEN, SH.card.Suit.SPADES);
         var cards = [seven];
 
-        ok(canLay(three, cards));
+        ok(SH.game.canLay(three, cards));
     });
     
     test("Can lay three on invisible on three", function() {
@@ -478,7 +478,7 @@ module("Game");
         var three2 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.SPADES);
         var cards = [three2, seven];
 
-        ok(canLay(three1, cards));
+        ok(SH.game.canLay(three1, cards));
     });
 
     test("Cannot lay three on invisible on four", function() {
@@ -487,7 +487,7 @@ module("Game");
         var four = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.SPADES);
         var cards = [four, seven];
 
-        ok(!canLay(three, cards));
+        ok(!SH.game.canLay(three, cards));
     });
 
     test("Can lay three on two invisibles on three", function() {
@@ -497,7 +497,7 @@ module("Game");
         var three2 = new SH.card.Card(SH.card.Rank.THREE, SH.card.Suit.SPADES);
         var cards = [three2, seven2, seven1, three1];
 
-        ok(canLay(three1, cards));
+        ok(SH.game.canLay(three1, cards));
     });
 
     test("Cannot lay three on four", function() {
@@ -505,7 +505,7 @@ module("Game");
         var four = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.SPADES);
         var cards = [four];
 
-        ok(!canLay(three, cards));
+        ok(!SH.game.canLay(three, cards));
     });
     
     test("Cannot lay three on invisible on four", function() {
@@ -514,7 +514,7 @@ module("Game");
         var four = new SH.card.Card(SH.card.Rank.FOUR, SH.card.Suit.SPADES);
         var cards = [four, seven];
 
-        ok(!canLay(three, cards));
+        ok(!SH.game.canLay(three, cards));
     });
 
     test("Can lay two on nine", function() {
@@ -522,7 +522,7 @@ module("Game");
         var nine = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.HEARTS);
         var cards = [nine];
 
-        ok(canLay(two, cards));
+        ok(SH.game.canLay(two, cards));
     });
 
     test("Can lay seven on nine", function() {
@@ -530,7 +530,7 @@ module("Game");
         var nine = new SH.card.Card(SH.card.Rank.NINE, SH.card.Suit.HEARTS);
         var cards = [nine];
 
-        ok(canLay(seven, cards));
+        ok(SH.game.canLay(seven, cards));
     });
     
     test("Can lay ten on ace", function() {
@@ -538,7 +538,7 @@ module("Game");
         var ace = new SH.card.Card(SH.card.Rank.ACE, SH.card.Suit.HEARTS);
         var cards = [ace];
 
-        ok(canLay(ten, cards));
+        ok(SH.game.canLay(ten, cards));
     });
 });
 

@@ -5,7 +5,7 @@
 <script type="text/javascript" src="game.js"></script>
 <script type="text/javascript" src="shithead.js"></script>
 </head>
-<body onload="SH.init()">
+<body onload="SH.gui.init()">
 
 <div id ="main">
 </div>
@@ -22,9 +22,9 @@
                                name="frm_player1name">
                 </div>
             </div>
-            <input type="button" value="Add player" onClick="SH.addplayer();">
+            <input type="button" value="Add player" onClick="SH.gui.addplayer();">
             <input id="create" type="submit" value="Create Game"
-                onClick="SH.createGame(this.form);return false"/>
+                onClick="SH.gui.createGame(this.form);return false"/>
         </form>
     </div>
 
@@ -45,8 +45,8 @@
             Hand card:<input type="text" name="handcard"/><br>
             Faceup card:<input type="text" name="faceupcard"/><br>
             <input id="swapcards" type="submit" value="Swap"
-                onClick="SH.swapCards(this.form);return false"/>
-            <input type="button" value="Done" onClick="SH.swapDone();"/>
+                onClick="SH.gui.swapCards(this.form);return false"/>
+            <input type="button" value="Done" onClick="SH.gui.swapDone();"/>
         </form>
     </div>
 
@@ -58,12 +58,12 @@
         <form id="frm_movechoice" method="post">
             <input type="text" name="choice"/></br>
             <input id="makemove" type="submit" value="Move"
-                onClick="SH.makeMove(this.form);return false"/>
+                onClick="SH.gui.makeMove(this.form);return false"/>
         </form>
     </div>
     
     <div id="pickup">
-        <input type="button" value="Pick up" onClick="SH.pickup();"/>
+        <input type="button" value="Pick up" onClick="SH.gui.pickup();"/>
     </div>
 
     <div id="badmove">You can't do that! </div>

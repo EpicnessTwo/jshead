@@ -40,31 +40,6 @@ SH.card.suitstr = function (suit) {
     }
 };
 
-SH.card.Card = function (rank, suit) {
-    this.rank = rank;
-    this.suit = suit;
-
-    this.toString = function() {
-        return SH.card.rankstr(this.rank) + " of " + SH.card.suitstr(this.suit);
-    };
-
-    this.isSpecial = function() {
-        return (this.rank == 2 || this.rank == 7 || this.rank == 10);
-    };
-
-    this.isInvisible = function() {
-        return (this.rank == 7);
-    };
-
-    this.isBurnCard = function() {
-        return (this.rank == 10);
-    };
-
-    this.isMissAGoCard = function() {
-        return (this.rank == 8);
-    };
-};
-
 SH.card.rankCompare = function (c1, c2) {
     if (c1.rank < c2.rank) {
         return -1;
@@ -97,4 +72,29 @@ SH.card.allRanksEqual = function (cards) {
     }
     
     return true;
+};
+
+SH.card.Card = function (rank, suit) {
+    this.rank = rank;
+    this.suit = suit;
+
+    this.toString = function() {
+        return SH.card.rankstr(this.rank) + " of " + SH.card.suitstr(this.suit);
+    };
+
+    this.isSpecial = function() {
+        return (this.rank == 2 || this.rank == 7 || this.rank == 10);
+    };
+
+    this.isInvisible = function() {
+        return (this.rank == 7);
+    };
+
+    this.isBurnCard = function() {
+        return (this.rank == 10);
+    };
+
+    this.isMissAGoCard = function() {
+        return (this.rank == 8);
+    };
 };

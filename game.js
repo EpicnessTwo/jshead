@@ -1,4 +1,24 @@
-function Game(numcards, players) {
+var SH = SH || {};
+
+SH.game = SH.game || {};
+
+SH.game.canLay = function (card, cards) {
+    if (cards.length == 0) {
+        return true;
+    } else if (card.isSpecial()) {
+        return true;
+    } else if (cards[cards.length - 1].isInvisible()) {
+        var newCards = cards.slice(0);
+        newCards.pop();
+        return SH.game.canLay(card, newCards);
+    } else if (card.rank < cards[cards.length -1].rank) {
+        return false;
+    } else {
+        return true;
+    }
+};
+
+SH.game.Game = function (numcards, players) {
     this.numplayers = players.length;
     this.numcards = numcards;
     this.players = players;
@@ -207,7 +227,7 @@ function Game(numcards, players) {
 
     this.canMoveWithOneOf = function(cards) {
         for (i = 0; i < cards.length; i++) {
-            if (canLay(cards[i], this.pile)) {
+            if (SH.game.canLay(cards[i], this.pile)) {
                 return true;
             }
         }
@@ -242,23 +262,7 @@ function Game(numcards, players) {
         if (!SH.card.allRanksEqual(cards)) {
             return false;
         } else {
-            return canLay(cards[0], this.pile);
+            return SH.game.canLay(cards[0], this.pile);
         }
     };
-}
-
-function canLay(card, cards) {
-    if (cards.length == 0) {
-        return true;
-    } else if (card.isSpecial()) {
-        return true;
-    } else if (cards[cards.length - 1].isInvisible()) {
-        var newCards = cards.slice(0);
-        newCards.pop();
-        return canLay(card, newCards);
-    } else if (card.rank < cards[cards.length -1].rank) {
-        return false;
-    } else {
-        return true;
-    }
-}
+};
