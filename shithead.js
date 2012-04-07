@@ -69,7 +69,7 @@ SH.createGame = function (form) {
 
     for (i = 0; i < SH.numplayers; i++) {
         var name = document.getElementById("frm_player" + (i + 1) + "name").value;
-        players.push(new Player(name, form.numcards.value));
+        players.push(new SH.player.Player(name, form.numcards.value));
     }
 
     SH.game = new Game(form.numcards.value, players);

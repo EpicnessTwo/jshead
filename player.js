@@ -1,4 +1,8 @@
-function Player(name, numCards) {
+var SH = SH || {};
+
+SH.player = SH.player || {};
+
+SH.player.Player = function (name, numCards) {
     this.name = name;
     this.numCards = numCards;
     this.hand = [];
@@ -51,4 +55,4 @@ function Player(name, numCards) {
                 this.hasCardsInFaceUp() || 
                 this.facedown.length > 0);
     };
-}
+};
