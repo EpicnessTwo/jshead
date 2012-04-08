@@ -106,52 +106,51 @@ module("Card");
 module("Player");
 
     test("Create player", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
-        equal(player.name, "James", "name set");
-        equal(player.numCards, 3, "num cards");
-        equal(player.hand.length, 0, "hand");
-        equal(player.faceup.length, 0, "faceup");
-        equal(player.facedown.length, 0, "facedown");
+        equal(player.getName(), "James", "name set");
+        equal(player.getHand().length, 0, "hand");
+        equal(player.getFaceUp().length, 0, "faceup");
+        equal(player.getFaceDown().length, 0, "facedown");
     });
 
     test("Deal card to hand", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var card = SH.card.card(SH.card.rank.FIVE, SH.card.suit.SPADES);
         player.dealToHand(card);
         
-        equal(player.hand[0], card);
+        equal(player.getHand()[0], card);
     });
 
     test("Deal two cards to hand", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var card1 = SH.card.card(SH.card.rank.FIVE, SH.card.suit.SPADES);
         var card2 = SH.card.card(SH.card.rank.ACE, SH.card.suit.DIAMONDS);
         player.dealToHand(card1);
         player.dealToHand(card2);
         
-        equal(player.hand[0], card1);
-        equal(player.hand[1], card2);
+        equal(player.getHand()[0], card1);
+        equal(player.getHand()[1], card2);
     });
     
     test("Deal card to faceup", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var card = SH.card.card(SH.card.rank.SEVEN, SH.card.suit.SPADES);
         player.dealToFaceUp(card);
         
-        equal(player.faceup[0], card);
+        equal(player.getFaceUp()[0], card);
     });
 
     test("Deal card to facedown", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var card = SH.card.card(SH.card.rank.JACK, SH.card.suit.HEARTS);
         player.dealToFaceDown(card);
         
-        equal(player.facedown[0], card);
+        equal(player.getFaceDown()[0], card);
     });
 
     test("Swap first and first", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var sevens = SH.card.card(SH.card.rank.SEVEN, SH.card.suit.SPADES);
@@ -169,12 +168,12 @@ module("Player");
 
         player.swapCards(0, 0);
     
-        equal(player.hand[0], twoh);
-        equal(player.faceup[0], threed);
+        equal(player.getHand()[0], twoh);
+        equal(player.getFaceUp()[0], threed);
     });
 
     test("Swap first and second", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var sevens = SH.card.card(SH.card.rank.SEVEN, SH.card.suit.SPADES);
@@ -192,12 +191,12 @@ module("Player");
 
         player.swapCards(0, 1);
     
-        equal(player.hand[0], jackc);
-        equal(player.faceup[1], threed);
+        equal(player.getHand()[0], jackc);
+        equal(player.getFaceUp()[1], threed);
     });
         
     test("Swap first and third", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var sevens = SH.card.card(SH.card.rank.SEVEN, SH.card.suit.SPADES);
@@ -215,12 +214,12 @@ module("Player");
 
         player.swapCards(0, 2);
     
-        equal(player.hand[0], eights);
-        equal(player.faceup[2], threed);
+        equal(player.getHand()[0], eights);
+        equal(player.getFaceUp()[2], threed);
     });
 
     test("Sort hand", function() {
-        var player = new SH.player.Player("James", 5);
+        var player = new SH.player.player("James", 5);
 
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var fourd = SH.card.card(SH.card.rank.FOUR, SH.card.suit.DIAMONDS);
@@ -236,15 +235,15 @@ module("Player");
 
         player.sortHand();
 
-        equal(player.hand[0], threed, "three first");
-        equal(player.hand[1], fourd, "four second");
-        equal(player.hand[2], eighth, "eight third");
-        equal(player.hand[3], jacks, "jack fourth");
-        equal(player.hand[4], twoc, "two fifth");
+        equal(player.getHand()[0], threed, "three first");
+        equal(player.getHand()[1], fourd, "four second");
+        equal(player.getHand()[2], eighth, "eight third");
+        equal(player.getHand()[3], jacks, "jack fourth");
+        equal(player.getHand()[4], twoc, "two fifth");
     });
 
     test("Remove one card from hand", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var fourd = SH.card.card(SH.card.rank.FOUR, SH.card.suit.DIAMONDS);
@@ -262,16 +261,16 @@ module("Player");
 
         player.removeFromHand(toRemove);
 
-        equal(player.hand.length, 4, "correct length");
-        ok(player.hand.indexOf(twoc) != -1, "contains two of clubs");
-        ok(player.hand.indexOf(eighth) != -1, "contains eight of hearts");
-        ok(player.hand.indexOf(fourd) != -1, "contains four of diamonds");
-        ok(player.hand.indexOf(jacks) != -1, "contains jack of spades");
-        ok(player.hand.indexOf(threed) == -1, "three of diamonds removed");
+        equal(player.getHand().length, 4, "correct length");
+        ok(player.getHand().indexOf(twoc) != -1, "contains two of clubs");
+        ok(player.getHand().indexOf(eighth) != -1, "contains eight of hearts");
+        ok(player.getHand().indexOf(fourd) != -1, "contains four of diamonds");
+        ok(player.getHand().indexOf(jacks) != -1, "contains jack of spades");
+        ok(player.getHand().indexOf(threed) == -1, "three of diamonds removed");
     });
 
     test("Remove two cards from hand", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var fourd = SH.card.card(SH.card.rank.FOUR, SH.card.suit.DIAMONDS);
@@ -289,16 +288,16 @@ module("Player");
 
         player.removeFromHand(toRemove);
 
-        equal(player.hand.length, 3, "correct length");
-        ok(player.hand.indexOf(twoc) != -1, "contains two of clubs");
-        ok(player.hand.indexOf(eighth) == -1, "eight of hearts removed");
-        ok(player.hand.indexOf(fourd) != -1, "contains four of diamonds");
-        ok(player.hand.indexOf(jacks) != -1, "contains jack of spades");
-        ok(player.hand.indexOf(threed) == -1, "three of diamonds removed");
+        equal(player.getHand().length, 3, "correct length");
+        ok(player.getHand().indexOf(twoc) != -1, "contains two of clubs");
+        ok(player.getHand().indexOf(eighth) == -1, "eight of hearts removed");
+        ok(player.getHand().indexOf(fourd) != -1, "contains four of diamonds");
+        ok(player.getHand().indexOf(jacks) != -1, "contains jack of spades");
+        ok(player.getHand().indexOf(threed) == -1, "three of diamonds removed");
     });
 
     test("Has cards in hand", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         player.dealToHand(threed);
 
@@ -306,13 +305,13 @@ module("Player");
     });
 
     test("Does not have cards in hand", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
         ok(!player.hasCardsInHand());
     });
 
     test("Has cards in faceup", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var threed = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         player.dealToFaceUp(threed);
 
@@ -320,13 +319,13 @@ module("Player");
     });
 
     test("Does not have cards in faceup", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
 
         ok(!player.hasCardsInFaceUp());
     });
 
     test("Has cards when has hand", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         
         var card1 = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var card2 = SH.card.card(SH.card.rank.TWO, SH.card.suit.HEARTS);
@@ -338,7 +337,7 @@ module("Player");
     });
 
     test("Has cards when has faceup", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var card1 = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var card2 = SH.card.card(SH.card.rank.TWO, SH.card.suit.HEARTS);
         
@@ -349,7 +348,7 @@ module("Player");
     });
     
     test("Has cards when has facedown", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         var card1 = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         var card2 = SH.card.card(SH.card.rank.TWO, SH.card.suit.HEARTS);
         
@@ -360,7 +359,7 @@ module("Player");
     });
 
     test("Does not have cards", function() {
-        var player = new SH.player.Player("James", 3);
+        var player = new SH.player.player("James", 3);
         
         ok(!player.hasCards());
     });
@@ -368,8 +367,8 @@ module("Player");
 module("Game");
 
     test("Create game", function() {
-        var player1 = new SH.player.Player("James", 3);
-        var player2 = new SH.player.Player("Dave", 3);
+        var player1 = new SH.player.player("James", 3);
+        var player2 = new SH.player.player("Dave", 3);
         var players = [player1, player2];
         var game = new SH.game.Game(3, players);
         
@@ -384,8 +383,8 @@ module("Game");
     });
 
     test("New game starts at first player", function() {
-        var player1 = new SH.player.Player("James", 3);
-        var player2 = new SH.player.Player("Dave", 3);
+        var player1 = new SH.player.player("James", 3);
+        var player2 = new SH.player.player("Dave", 3);
         var players = [player1, player2];
         var game = new SH.game.Game(3, players);
         var current = game.getCurrentPlayer();
@@ -395,10 +394,10 @@ module("Game");
     });
 
     test("Next player moves to next player", function() {
-        var player1 = new SH.player.Player("James", 3);
+        var player1 = new SH.player.player("James", 3);
         var card1 = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         player1.dealToHand(card1);
-        var player2 = new SH.player.Player("Dave", 3);
+        var player2 = new SH.player.player("Dave", 3);
         var card2 = SH.card.card(SH.card.rank.NINE, SH.card.suit.SPADES);
         player2.dealToHand(card2);
         var players = [player1, player2];
@@ -410,10 +409,10 @@ module("Game");
     });
         
     test("Next player rolls", function() {
-        var player1 = new SH.player.Player("James", 3);
+        var player1 = new SH.player.player("James", 3);
         var card1 = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         player1.dealToHand(card1);
-        var player2 = new SH.player.Player("Dave", 3);
+        var player2 = new SH.player.player("Dave", 3);
         var card2 = SH.card.card(SH.card.rank.NINE, SH.card.suit.SPADES);
         player2.dealToHand(card2);
         var players = [player1, player2];
@@ -426,13 +425,13 @@ module("Game");
     });
 
     test("Next player skips when no cards", function() {
-        var player1 = new SH.player.Player("James", 3);
+        var player1 = new SH.player.player("James", 3);
         var card1 = SH.card.card(SH.card.rank.THREE, SH.card.suit.DIAMONDS);
         player1.dealToHand(card1);
-        var player2 = new SH.player.Player("Dave", 3);
+        var player2 = new SH.player.player("Dave", 3);
         var card2 = SH.card.card(SH.card.rank.NINE, SH.card.suit.SPADES);
         player2.dealToHand(card2);
-        var playerNoCards = new SH.player.Player("NoCards", 3);
+        var playerNoCards = new SH.player.player("NoCards", 3);
         var players = [player1, playerNoCards, player2];
         var game = new SH.game.Game(3, players);
         game.nextPlayer();

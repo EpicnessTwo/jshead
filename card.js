@@ -13,8 +13,8 @@ SH.card = SH.card || (function () {
             HEARTS:1, CLUBS:2, DIAMONDS:3, SPADES:4
         },
 
-        rankstr: function (r) {
-            switch(r) {
+        rankstr: function (rank) {
+            switch(rank) {
             case(SH.card.rank.TWO):   return "TWO";
             case(SH.card.rank.THREE): return "THREE";
             case(SH.card.rank.FOUR):  return "FOUR";
@@ -32,8 +32,8 @@ SH.card = SH.card || (function () {
             }
         },
 
-        suitstr: function (s) {
-            switch(s) {
+        suitstr: function (suit) {
+            switch(suit) {
             case(SH.card.suit.HEARTS):   return "HEARTS";
             case(SH.card.suit.CLUBS):    return "CLUBS";
             case(SH.card.suit.DIAMONDS): return "DIAMONDS";
@@ -76,35 +76,35 @@ SH.card = SH.card || (function () {
             return true;
         },
 
-        card: function (r, s) {
+        card: function (rank, suit) {
             return {
                 getRank: function () {
-                    return r;
+                    return rank;
                 },
 
                 getSuit: function () {
-                    return s;
+                    return suit;
                 },
 
                 toString: function () {
-                    return SH.card.rankstr(r) + 
-                        " of " + SH.card.suitstr(s);
+                    return SH.card.rankstr(rank) + 
+                        " of " + SH.card.suitstr(suit);
                 },
 
                 isSpecial: function () {
-                    return (r == 2 || r == 7 || r == 10);
+                    return (rank == 2 || rank == 7 || rank == 10);
                 },
 
                 isInvisible: function () {
-                    return (r == 7);
+                    return (rank == 7);
                 },
 
                 isBurnCard: function () {
-                    return (r == 10);
+                    return (rank == 10);
                 },
 
                 isMissAGoCard: function () {
-                    return (r == 8);
+                    return (rank == 8);
                 }
             };
         }

@@ -71,7 +71,7 @@ SH.gui.createGame = function (form) {
 
     for (i = 0; i < SH.gui.numplayers; i++) {
         var name = document.getElementById("frm_player" + (i + 1) + "name").value;
-        players.push(new SH.player.Player(name, form.numcards.value));
+        players.push(SH.player.player(name, form.numcards.value));
     }
 
     SH.gui.game = new SH.game.Game(form.numcards.value, players);
@@ -196,8 +196,8 @@ SH.gui.updateGame = function () {
 
 SH.gui.showMoveMessage = function () {
     var player = SH.gui.game.getCurrentPlayer();
-    var divcontent = player.name;
-    SH.gui.divmessage.innerHTML = player.name;
+    var divcontent = player.getName();
+    SH.gui.divmessage.innerHTML = player.getName();
     
     if (player.hasCardsInHand()) {
         divcontent += ", choose cards from hand:<br>";
@@ -213,16 +213,16 @@ SH.gui.showMoveMessage = function () {
 SH.gui.showPickupMessage = function () {
     var player = SH.gui.game.getCurrentPlayer();
     SH.gui.divmessage.innerHTML = 
-        "OH NO! " + player.name + ", you must pickup.";
+        "OH NO! " + player.getName() + ", you must pickup.";
 };
 
 SH.gui.updatePlayerSwap = function () {
     var player = SH.gui.game.getCurrentPlayer();
 
     SH.gui.divswpplayer.innerHTML = 
-        player.name + "<br>" + 
-        SH.gui.showCards(player.hand, "Hand", false) + "<br>" + 
-        SH.gui.showCards(player.faceup, "Face up", false) + "<br>";
+        player.getName() + "<br>" + 
+        SH.gui.showCards(player.getHand(), "Hand", false) + "<br>" + 
+        SH.gui.showCards(player.getFaceUp(), "Face up", false) + "<br>";
 };
 
 SH.gui.updatePlayers = function () {
@@ -231,12 +231,12 @@ SH.gui.updatePlayers = function () {
 
     for (i = 0; i < SH.gui.game.players.length; i++) {
         player = SH.gui.game.players[i];
-        divcontent += player.name + "<br>";
-        divcontent += SH.gui.showCards(player.hand, "Hand", false);
+        divcontent += player.getName() + "<br>";
+        divcontent += SH.gui.showCards(player.getHand(), "Hand", false);
         divcontent += "<br>";
-        divcontent += SH.gui.showCards(player.faceup, "Face up", false);        
+        divcontent += SH.gui.showCards(player.getFaceUp(), "Face up", false);        
         divcontent += "<br>";
-        divcontent += SH.gui.showCards(player.facedown, "Face down", true);
+        divcontent += SH.gui.showCards(player.getFaceDown(), "Face down", true);
         divcontent += "<br>";
     }
 

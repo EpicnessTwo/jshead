@@ -84,18 +84,18 @@ SH.game.Game = function (numcards, players) {
         var toLay = [];
 
         this.currentplayer = 0;
-        var currentLowest = this.players[this.currentplayer].hand[0];
+        var currentLowest = this.players[this.currentplayer].getHand()[0];
         for (i = 0; i < this.numplayers ; i++) {
-            var playersLowest = this.players[i].hand[0];
+            var playersLowest = this.players[i].getHand()[0];
             if (SH.card.shCompare(playersLowest, currentLowest) == -1) {
                 this.currentplayer = i;
             }
         }
 
         var player = this.players[this.currentplayer];
-        var first = player.hand[0];
+        var first = player.getHand()[0];
         for (i = 0; i < this.numcards; i++) {
-            var current = this.players[this.currentplayer].hand[i];
+            var current = this.players[this.currentplayer].getHand()[i];
             if (SH.card.rankCompare(current, first) == 0) {
                 toLay.push(i);
             }
@@ -110,28 +110,28 @@ SH.game.Game = function (numcards, players) {
     this.setLastMove = function(toLay) {
         var player = this.players[this.currentplayer];
         this.lastmove = "";
-        this.lastmove += player.name;
+        this.lastmove += player.getName();
         this.lastmove += " laid the ";
         for (i = 0; i < toLay.length; i++) {
-            this.lastmove += player.hand[toLay[i]].toString();
+            this.lastmove += player.getHand()[toLay[i]].toString();
             this.lastmove += ", ";
         }
     };
 
     this.setLastMovePickup = function() {
         var player = this.players[this.currentplayer];
-        this.lastmove = player.name + " picked up.";
+        this.lastmove = player.getName() + " picked up.";
     };
      
     this.playFromHand = function(toLay) {
         var player = this.players[this.currentplayer];
         for (i = 0; i < toLay.length; i++) {
-            this.pile.push(player.hand[toLay[i]]);
+            this.pile.push(player.getHand()[toLay[i]]);
         }
 
         player.removeFromHand(toLay);
         
-        while ((this.deck.length > 0) && (player.hand.length < this.numcards)) {
+        while ((this.deck.length > 0) && (player.getHand().length < this.numcards)) {
             player.dealToHand(this.deck.pop());
         }
     };
@@ -180,7 +180,7 @@ SH.game.Game = function (numcards, players) {
         this.burnt += this.pile.length;
         this.pile = [];
 
-        this.lastmove = player.name;
+        this.lastmove = player.getName();
         this.lastmove += " burnt the pile.";
 
         if (!player.hasCards()) {
@@ -194,7 +194,7 @@ SH.game.Game = function (numcards, players) {
 
     this.pickup = function() {
         var player = this.players[this.currentplayer];
-        player.hand = player.hand.concat(this.pile);
+        player.setHand(player.getHand().concat(this.pile));
         player.sortHand();
         this.pile = [];
         this.setLastMovePickup();
@@ -203,7 +203,7 @@ SH.game.Game = function (numcards, players) {
 
     this.missAGo = function() {
         var player = this.players[this.currentplayer];
-        this.lastmove = player.name;
+        this.lastmove = player.getName();
         this.lastmove += " laid miss a go card.";
         this.nextPlayer();
         this.nextPlayer();
@@ -217,9 +217,9 @@ SH.game.Game = function (numcards, players) {
         var player = this.players[this.currentplayer];
 
         if (player.hasCardsInHand()) {
-            return this.canMoveWithOneOf(player.hand);
+            return this.canMoveWithOneOf(player.getHand());
         } else if (player.hasCardsInFaceUp()) {
-            return this.canMoveWithOneOf(player.faceup);
+            return this.canMoveWithOneOf(player.getFaceUp());
         } else {
             return false;
         }
@@ -240,18 +240,18 @@ SH.game.Game = function (numcards, players) {
 
         if (player.hasCardsInHand()) {
             for (i = 0; i < choices.length; i++) {
-                if (i >= player.hand.length) {
+                if (i >= player.getHand().length) {
                     return false;
                 } else {
-                    cards.push(player.hand[choices[i]]);
+                    cards.push(player.getHand()[choices[i]]);
                 }
             }
         } else {
             for (i = 0; i < choices.length; i++) {
-                if (i >= player.faceup.length) {
+                if (i >= player.getFaceUp().length) {
                     return false;
                 } else {
-                    cards.push(player.faceup[choices[i]]);
+                    cards.push(player.getFaceUp()[choices[i]]);
                 }
             }
         }
