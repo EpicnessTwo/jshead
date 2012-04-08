@@ -5,9 +5,9 @@ SH.player = SH.player || (function () {
     return {
 
         player: function (name, numCards) {
-            var hand = [];
-            var faceup = [];
-            var facedown = [];
+            var hand = [],
+            faceup = [],
+            facedown = [];
 
             return {
             
