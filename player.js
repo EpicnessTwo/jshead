@@ -1,79 +1,83 @@
 var SH = SH || {};
 
-SH.player = SH.player || {};
-
-SH.player.player = function (name, numCards) {
-    var hand = [];
-    var faceup = [];
-    var facedown = [];
+SH.player = SH.player || (function () {
 
     return {
-    
-        getName: function () {
-            return name;
-        },
 
-        getHand: function () {
-            return hand;
-        },
+        player: function (name, numCards) {
+            var hand = [];
+            var faceup = [];
+            var facedown = [];
 
-        setHand: function (newHand) {
-            hand = newHand;
-        },
+            return {
+            
+                getName: function () {
+                    return name;
+                },
 
-        getFaceUp: function () {
-            return faceup;
-        },
+                getHand: function () {
+                    return hand;
+                },
 
-        getFaceDown: function () {
-            return facedown;
-        },
+                setHand: function (newHand) {
+                    hand = newHand;
+                },
 
-        dealToHand: function (card) {
-            hand.push(card);
-        },
-    
-        dealToFaceUp: function (card) {
-            faceup.push(card);
-        },
+                getFaceUp: function () {
+                    return faceup;
+                },
 
-        dealToFaceDown: function (card) {
-            facedown.push(card);
-        },
+                getFaceDown: function () {
+                    return facedown;
+                },
 
-        swapCards: function (handcard, faceupcard) {
-            var tmp = hand[handcard];
-            hand[handcard] = faceup[faceupcard];
-            faceup[faceupcard] = tmp;
-        },
+                dealToHand: function (card) {
+                    hand.push(card);
+                },
+            
+                dealToFaceUp: function (card) {
+                    faceup.push(card);
+                },
 
-        sortHand: function () {
-            hand.sort(SH.card.shCompare);
-        },
+                dealToFaceDown: function (card) {
+                    facedown.push(card);
+                },
 
-        removeFromHand: function (toRemove) {
-            var newHand = [];
-            for (i = 0; i < hand.length; i++) {
-                if (toRemove.indexOf(i) == -1) {
-                    newHand.push(hand[i]);
+                swapCards: function (handcard, faceupcard) {
+                    var tmp = hand[handcard];
+                    hand[handcard] = faceup[faceupcard];
+                    faceup[faceupcard] = tmp;
+                },
+
+                sortHand: function () {
+                    hand.sort(SH.card.shCompare);
+                },
+
+                removeFromHand: function (toRemove) {
+                    var newHand = [];
+                    for (i = 0; i < hand.length; i++) {
+                        if (toRemove.indexOf(i) == -1) {
+                            newHand.push(hand[i]);
+                        }
+                    }
+
+                    hand = newHand;
+                },
+
+                hasCardsInHand: function () {
+                    return hand.length > 0;
+                },
+
+                hasCardsInFaceUp: function () {
+                    return faceup.length > 0;
+                },
+
+                hasCards: function () {
+                    return (hand.length > 0 || 
+                            faceup.length > 0 || 
+                            facedown.length > 0);
                 }
-            }
-
-            hand = newHand;
-        },
-
-        hasCardsInHand: function () {
-            return hand.length > 0;
-        },
-
-        hasCardsInFaceUp: function () {
-            return faceup.length > 0;
-        },
-
-        hasCards: function () {
-            return (hand.length > 0 || 
-                    faceup.length > 0 || 
-                    facedown.length > 0);
+            };
         }
     };
-};
+}());
