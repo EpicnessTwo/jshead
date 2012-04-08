@@ -74,7 +74,7 @@ SH.gui.createGame = function (form) {
         players.push(SH.player.player(name, form.numcards.value));
     }
 
-    SH.gui.game = new SH.game.Game(form.numcards.value, players);
+    SH.gui.game = new SH.game.game(form.numcards.value, players);
     SH.gui.game.deal();
     
     SH.gui.appendToMain(SH.gui.divtitle);
@@ -181,17 +181,17 @@ SH.gui.showCards = function (cards, name, hide) {
 
 SH.gui.updateGame = function () {
     var pilecards = "";
-    for (i = SH.gui.game.pile.length - 1; i >= 0; i--) {
-        pilecards += SH.gui.game.pile[i].toString();
+    for (i = SH.gui.game.getPile().length - 1; i >= 0; i--) {
+        pilecards += SH.gui.game.getPile()[i].toString();
         pilecards += "<br>";
     }
     
-    SH.gui.divpile.innerHTML = SH.gui.game.pile.length + 
+    SH.gui.divpile.innerHTML = SH.gui.game.getPile().length + 
         " on pile:<br>" + pilecards;    
-    SH.gui.divdeck.innerHTML = SH.gui.game.deck.length + 
+    SH.gui.divdeck.innerHTML = SH.gui.game.getDeck().length + 
         " left on deck<br>";
-    SH.gui.divburnt.innerHTML = SH.gui.game.burnt + " burnt<br>";
-    SH.gui.divlastmove.innerHTML = SH.gui.game.lastmove + "<br>";
+    SH.gui.divburnt.innerHTML = SH.gui.game.getBurnt() + " burnt<br>";
+    SH.gui.divlastmove.innerHTML = SH.gui.game.getLastmove() + "<br>";
 };
 
 SH.gui.showMoveMessage = function () {
@@ -229,8 +229,8 @@ SH.gui.updatePlayers = function () {
     var divcontent = "";
     var player;
 
-    for (i = 0; i < SH.gui.game.players.length; i++) {
-        player = SH.gui.game.players[i];
+    for (i = 0; i < SH.gui.game.getPlayers().length; i++) {
+        player = SH.gui.game.getPlayers()[i];
         divcontent += player.getName() + "<br>";
         divcontent += SH.gui.showCards(player.getHand(), "Hand", false);
         divcontent += "<br>";
