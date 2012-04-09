@@ -67,7 +67,7 @@ SH.card = SH.card || (function () {
         allRanksEqual: function (cards) {
             var first = cards[0];
 
-            for (i = 1; i < cards.length; i++) {
+            for (var i = 1, len = cards.length; i < len; i++) {
                 if (!(SH.card.rankCompare(first, cards[i]) == 0)) {
                     return false;
                 }

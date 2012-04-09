@@ -55,7 +55,7 @@ SH.player = SH.player || (function () {
 
                 removeFromHand: function (toRemove) {
                     var newHand = [];
-                    for (i = 0; i < hand.length; i++) {
+                    for (var i = 0, len = hand.length; i < len; i++) {
                         if (toRemove.indexOf(i) == -1) {
                             newHand.push(hand[i]);
                         }

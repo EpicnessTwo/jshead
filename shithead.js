@@ -69,7 +69,7 @@ SH.gui = SH.gui || (function () {
 
     updateGame = function () {
         var pilecards = "";
-        for (i = game.getPile().length - 1; i >= 0; i--) {
+        for (var i = game.getPile().length - 1; i >= 0; i--) {
             pilecards += game.getPile()[i].toString();
             pilecards += "<br>";
         }
@@ -86,7 +86,7 @@ SH.gui = SH.gui || (function () {
         var divcontent = "";
         var player;
 
-        for (i = 0; i < game.getPlayers().length; i++) {
+        for (var i = 0, len = game.getPlayers().length; i < len; i++) {
             player = game.getPlayers()[i];
             divcontent += player.getName() + "<br>";
             divcontent += showCards(player.getHand(), "Hand", false);
@@ -111,7 +111,7 @@ SH.gui = SH.gui || (function () {
     
     showCards = function (cards, name, hide) {
         var content = name + ":<br>";
-        for (c = 0; c < cards.length; c++) {
+        for (var c = 0, len = cards.length; c < len; c++) {
             content += "(" + (c+1) + ")";
             if (hide) {
                 content += "****";
@@ -180,7 +180,7 @@ SH.gui = SH.gui || (function () {
             
             var players = [];
 
-            for (i = 0; i < numplayers; i++) {
+            for (var i = 0; i < numplayers; i++) {
                 var name = document.getElementById("frm_player" + (i + 1) + "name").value;
                 players.push(SH.player.player(name, form.numcards.value));
             }

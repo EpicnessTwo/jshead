@@ -39,7 +39,7 @@ SH.game = SH.game || (function () {
                 lastmove = "";
                 lastmove += player.getName();
                 lastmove += " laid the ";
-                for (i = 0; i < toLay.length; i++) {
+                for (var i = 0, len = toLay.length; i < len; i++) {
                     lastmove += player.getHand()[toLay[i]].toString();
                     lastmove += ", ";
                 }
@@ -52,7 +52,7 @@ SH.game = SH.game || (function () {
             
             playFromHand = function(toLay) {
                 var player = players[currentplayer];
-                for (i = 0; i < toLay.length; i++) {
+                for (var i = 0, len = toLay.length; i < len; i++) {
                     pile.push(player.getHand()[toLay[i]]);
                 }
 
@@ -129,7 +129,7 @@ SH.game = SH.game || (function () {
             },
             
             canMoveWithOneOf = function(cards) {
-                for (i = 0; i < cards.length; i++) {
+                for (var i = 0, len = cards.length; i < len; i++) {
                     if (SH.game.canLay(cards[i], pile)) {
                         return true;
                     }
@@ -151,8 +151,8 @@ SH.game = SH.game || (function () {
                 rank,
                 suit;
                 
-                for (rank = 2; rank < 15; rank++) {
-                    for (suit = 1; suit < 5; suit++) {
+                for (var rank = 2; rank < 15; rank++) {
+                    for (var suit = 1; suit < 5; suit++) {
                         singleDeck.push(SH.card.card(rank, suit));
                     }
                 }
@@ -186,8 +186,8 @@ SH.game = SH.game || (function () {
 
                 deal: function () {
                     shuffle();
-                    for (i = 0; i < players.length; i++) {
-                        for (j = 0; j < numcards; j++) {
+                    for (var i = 0, len = players.length; i < len; i++) {
+                        for (var j = 0; j < numcards; j++) {
                             players[i].dealToHand(deck.pop());
                             players[i].dealToFaceUp(deck.pop());
                             players[i].dealToFaceDown(deck.pop());
@@ -215,7 +215,7 @@ SH.game = SH.game || (function () {
                     first;
 
                     currentplayer = 0;
-                    for (i = 0; i < numplayers ; i++) {
+                    for (var i = 0; i < numplayers ; i++) {
                         playersLowest = players[i].getHand()[0];
                         if (SH.card.shCompare(playersLowest, currentLowest) == -1) {
                             currentplayer = i;
@@ -224,7 +224,7 @@ SH.game = SH.game || (function () {
 
                     player = players[currentplayer];
                     first = player.getHand()[0];
-                    for (i = 0; i < numcards; i++) {
+                    for (var i = 0; i < numcards; i++) {
                         current = players[currentplayer].getHand()[i];
                         if (SH.card.rankCompare(current, first) == 0) {
                             toLay.push(i);
@@ -278,7 +278,7 @@ SH.game = SH.game || (function () {
                     var cards = [];
 
                     if (player.hasCardsInHand()) {
-                        for (i = 0; i < choices.length; i++) {
+                        for (var i = 0, len = choices.length; i < len; i++) {
                             if (i >= player.getHand().length) {
                                 return false;
                             } else {
@@ -286,7 +286,7 @@ SH.game = SH.game || (function () {
                             }
                         }
                     } else {
-                        for (i = 0; i < choices.length; i++) {
+                        for (var i = 0, len = choices.length; i < len; i++) {
                             if (i >= player.getFaceUp().length) {
                                 return false;
                             } else {
