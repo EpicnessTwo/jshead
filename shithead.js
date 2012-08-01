@@ -37,11 +37,13 @@ SH.gui = SH.gui || (function () {
             appendToMain(divmessage);
             hide(divpickup);
             appendToMain(divmovechoice);
+            document.getElementById("moveinput").focus();
         } else {
             showPickupMessage();
             appendToMain(divmessage);
             hide(divmovechoice);
             appendToMain(divpickup);
+            document.getElementById("pickupbutton").focus();
         }
     },
 
@@ -247,7 +249,7 @@ SH.gui = SH.gui || (function () {
                 appendToMain(divbadmove);
                 form.choice.value = "";
             }
-           
+
             tryMove();
         },
 

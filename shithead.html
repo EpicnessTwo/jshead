@@ -56,14 +56,14 @@
 
     <div id="movechoice">
         <form id="frm_movechoice" method="post">
-            <input type="text" name="choice"/></br>
+            <input id="moveinput" type="text" name="choice"/></br>
             <input id="makemove" type="submit" value="Move"
                 onClick="SH.gui.makeMove(this.form);return false"/>
         </form>
     </div>
     
     <div id="pickup">
-        <input type="button" value="Pick up" onClick="SH.gui.pickup();"/>
+        <input id="pickupbutton" type="button" value="Pick up" onClick="SH.gui.pickup();"/>
     </div>
 
     <div id="badmove">You can't do that! </div>
