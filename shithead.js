@@ -160,20 +160,23 @@ SH.gui = SH.gui || (function () {
             divbadmove.style.display="none";
 
             appendToMain(divgameform);    
+
+            document.getElementById("numcardsinput").focus();
         },
 
         addplayer: function () {
             if (numplayers == maxplayers) {
                 alert("Upto " + maxplayers + " players are allowed");
             } else {
-                var newdiv = document.createElement('div');
-                newdiv.id = "frm_player" + (numplayers + 1);
-                newdiv.innerHTML = "Player " + (numplayers + 1) + 
-                    " name: <input type='text' " + 
-                    "id='frm_player" + (numplayers + 1) + "name' " + 
-                    "name='frm_player" + (numplayers + 1) + "name'>";
-                document.getElementById("frm_players").appendChild(newdiv);
                 numplayers++;
+                var newdiv = document.createElement('div');
+                newdiv.id = "frm_player" + numplayers;
+                newdiv.innerHTML = "Player " + numplayers + 
+                    " name: <input type='text' " + 
+                    "id='frm_player" + numplayers + "name' " + 
+                    "name='frm_player" + numplayers + "name'>";
+                document.getElementById("frm_players").appendChild(newdiv);
+                document.getElementById("frm_player" + numplayers + "name").focus();
             }
         },
 
