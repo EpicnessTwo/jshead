@@ -1,0 +1,74 @@
+<html>
+<head>
+<script type="text/javascript" src="card.js"></script>
+<script type="text/javascript" src="player.js"></script>
+<script type="text/javascript" src="game.js"></script>
+<script type="text/javascript" src="shithead.js"></script>
+</head>
+<body onload="SH.gui.init()">
+
+<div id ="main">
+</div>
+
+<div id="divs">
+    <div id="gameform">
+        <form id="gameform_frm" method="post">
+            Number of cards each: <input id="numcardsinput" type="text" name="numcards"/>
+            <div id="frm_players">
+                <div id="frm_player1">
+                    Player 1 name: 
+                        <input type="text" 
+                               id="frm_player1name" 
+                               name="frm_player1name">
+                </div>
+            </div>
+            <input type="button" value="Add player" onClick="SH.gui.addplayer();">
+            <input id="create" type="submit" value="Create Game"
+                onClick="SH.gui.createGame(this.form);return false"/>
+        </form>
+    </div>
+
+    <div id="title">Shithead<br></div>
+        
+    <div id="pile"></div>
+
+    <div id="deck"></div>
+
+    <div id="burnt"></div>
+    
+    <div id="lastmove"></div>
+
+    <div id="swp_player"></div>
+    
+    <div id="swap"> 
+        <form id="frm_swp" method="post">
+            Hand card:<input type="text" name="handcard"/><br>
+            Faceup card:<input type="text" name="faceupcard"/><br>
+            <input id="swapcards" type="submit" value="Swap"
+                onClick="SH.gui.swapCards(this.form);return false"/>
+            <input type="button" value="Done" onClick="SH.gui.swapDone();"/>
+        </form>
+    </div>
+
+    <div id="players"></div>
+    
+    <div id="message"></div>
+
+    <div id="movechoice">
+        <form id="frm_movechoice" method="post">
+            <input id="moveinput" type="text" name="choice"/></br>
+            <input id="makemove" type="submit" value="Move"
+                onClick="SH.gui.makeMove(this.form);return false"/>
+        </form>
+    </div>
+    
+    <div id="pickup">
+        <input id="pickupbutton" type="button" value="Pick up" onClick="SH.gui.pickup();"/>
+    </div>
+
+    <div id="badmove">You can't do that! </div>
+
+</div>
+
+</body>
+</html>
